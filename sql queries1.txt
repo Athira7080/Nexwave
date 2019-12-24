@@ -1,0 +1,147 @@
+
+SQL> select count(distinct job) from emp;
+
+COUNT(DISTINCTJOB)
+------------------
+                 5
+
+SQL> select sum(sal) from emp;
+
+  SUM(SAL)
+----------
+     29025
+
+SQL> select max(sal),min(sal),avg(sal) from emp;
+
+  MAX(SAL)   MIN(SAL)   AVG(SAL)
+---------- ---------- ----------
+      5000        800 2073.21429
+
+SQL> select max(sal) from emp where dept='salesman';
+select max(sal) from emp where dept='salesman'
+                               *
+ERROR at line 1:
+ORA-00904: "DEPT": invalid identifier
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select max(sal) from emp where job='salesman';
+
+  MAX(SAL)
+----------
+
+
+SQL> select max(sal) from emp where job=salesman;
+select max(sal) from emp where job=salesman
+                                   *
+ERROR at line 1:
+ORA-00904: "SALESMAN": invalid identifier
+
+
+SQL> select max(sal) from emp having job=salesman;
+select max(sal) from emp having job=salesman
+                                    *
+ERROR at line 1:
+ORA-00904: "SALESMAN": invalid identifier
+
+
+SQL> select max(sal) from emp having job='salesman';
+select max(sal) from emp having job='salesman'
+                                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select max(sal) from emp having job='salesman' group by job;
+
+no rows selected
+
+SQL> select max(sal) from emp where JOB='SALESMAN';
+
+  MAX(SAL)
+----------
+      1600
+
+SQL> select avg(sal) from emp where deptno=20;
+
+  AVG(SAL)
+----------
+      2175
+
+SQL> select count(distinct JOB) from emp group by JOB;
+
+COUNT(DISTINCTJOB)
+------------------
+                 1
+                 1
+                 1
+                 1
+                 1
+
+SQL> select count(*),deptno from emp group by deptno;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         3         10
+
+SQL> select count(*) from emp where deptno=10;
+
+  COUNT(*)
+----------
+         3
+
+SQL> select count(*) from emp where JOB='MANAGERS';
+
+  COUNT(*)
+----------
+         0
+
+SQL> select count(*) from emp where JOB='MANAGER';
+
+  COUNT(*)
+----------
+         3
+
+SQL> select w.ename ||' reports to '|| m.ename from emp w,emp m where w.mgr=m.empno;
+
+W.ENAME||'REPORTSTO'||M.ENAME
+--------------------------------
+FORD reports to JONES
+SCOTT reports to JONES
+TURNER reports to BLAKE
+ALLEN reports to BLAKE
+WARD reports to BLAKE
+JAMES reports to BLAKE
+MARTIN reports to BLAKE
+MILLER reports to CLARK
+ADAMS reports to SCOTT
+BLAKE reports to KING
+JONES reports to KING
+CLARK reports to KING
+SMITH reports to FORD
+
+13 rows selected.
+
+SQL>
