@@ -1,0 +1,44 @@
+Cursor for loops:
+
+SQL> declare
+    cursor c1 is select empno,hiredate
+    from emp
+    where deptno=20;
+    begin
+    for i in c1
+    loop
+    dbms_output.put_line(i.empno||' ' ||i.hiredate);
+    end loop;
+   end;
+   /
+
+Output:
+7369 17-DEC-80
+7566 02-APR-81
+7788 19-APR-87
+7876 23-MAY-87
+7902 03-DEC-81
+
+PL/SQL procedure successfully completed.
+
+
+updation in cursor for loops:
+    begin
+    for i in ( select empno,hiredate
+    from emp
+    where deptno=20)
+    loop
+    dbms_output.put_line(i.empno||' ' ||i.hiredate);
+    end loop;
+    end;
+    /
+
+Output:
+
+7369 17-DEC-80
+7566 02-APR-81
+7788 19-APR-87
+7876 23-MAY-87
+7902 03-DEC-81
+
+PL/SQL procedure successfully completed.

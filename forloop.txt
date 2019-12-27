@@ -1,0 +1,76 @@
+for loop:
+
+SQL> declare
+  2  v_counter number:=1;
+  3  begin
+  4  for i in 1..10
+  5  loop
+  6  v_counter:= v_counter + 1;
+  7  exit when v_counter>5;
+  8  dbms_output.put_line(v_counter);
+  9  end loop;
+ 10  end;
+ 11  /
+
+output:
+
+2
+3
+4
+5
+
+PL/SQL procedure successfully completed.
+
+
+reverse using for:
+
+SQL> declare
+  2      v_counter number:=10;
+  3      begin
+  4      for i in reverse 1..10
+  5      loop
+  6      v_counter:= v_counter - 1;
+  7      exit when v_counter<1;
+  8      dbms_output.put_line(v_counter);
+  9      end loop;
+ 10      end;
+ 11      /
+
+output:
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+PL/SQL procedure successfully completed.
+
+
+
+pattern:
+
+SQL> declare
+    begin
+    for i in 1..5 loop
+    for j in 1..i loop
+    dbms_output.put('*');
+    end loop;
+dbms_output.put_line('');
+    end loop;
+    end;
+    /
+
+output:
+
+*
+**
+***
+****
+*****
+
+PL/SQL procedure successfully completed.
+

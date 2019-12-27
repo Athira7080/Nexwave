@@ -1,0 +1,82 @@
+    
+Cursor:
+
+SQL>  declare
+    cursor c1 is select ename,sal from emp
+    where deptno=10;
+    v_name emp.ename%type;
+    v_sal emp.sal%type;
+    begin
+    open c1;
+    loop
+    fetch c1 into v_name,v_sal;
+    exit when c1%notfound;
+    dbms_output.put_line(v_name||' ' ||v_sal);
+    end loop;
+    close c1;
+    end;
+    /
+
+Output:
+
+CLARK 2450
+KING 5000
+MILLER 1300
+
+PL/SQL procedure successfully completed.
+
+
+updation on cursor:
+example1:
+
+SQL> declare
+    cursor c1 is select * from emp
+    where deptno=10;
+   v_emprec emp%rowtype;
+    begin
+    open c1;
+    loop
+    fetch c1 into v_emprec;
+    exit when c1%notfound;
+    dbms_output.put_line(v_emprec.ename||' ' ||v_emprec.sal||' ' ||v_emprec.job);
+    end loop;
+    close c1;
+    end;
+    /
+
+
+Output:
+
+CLARK 2450 MANAGER
+KING 5000 PRESIDENT
+MILLER 1300 CLERK
+
+PL/SQL procedure successfully completed.
+
+
+example2:
+
+SQL> declare
+    cursor c1 is select * from emp
+    where deptno=10;
+    v_emprec emp%rowtype;
+    begin
+    if not c1%isopen then
+    open c1;
+    end if;
+    loop
+    fetch c1 into v_emprec;
+    exit when c1%notfound and c1%rowcount>=1;
+    dbms_output.put_line(v_emprec.ename||' ' ||v_emprec.sal||' ' ||v_emprec.job);
+    end loop;
+    close c1;
+    end;
+    /
+
+Output:
+
+CLARK 2450 MANAGER
+KING 5000 PRESIDENT
+MILLER 1300 CLERK
+
+PL/SQL procedure successfully completed.

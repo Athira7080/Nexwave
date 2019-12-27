@@ -1,0 +1,52 @@
+%ROWTYPE:
+
+SQL> declare
+    v_emp emp%rowtype;
+    v_empno emp.empno%type:=&v_empno;
+    begin
+    select * into v_emp
+    from emp
+    where empno=v_empno;
+    dbms_output.put_line(v_emp.ename||' '||v_emp.sal);
+    end;
+    /
+
+Output:
+
+Enter value for v_empno: 7782
+old   3: v_empno emp.empno%type:=&v_empno;
+new   3: v_empno emp.empno%type:=7782;
+CLARK 2450
+
+PL/SQL procedure successfully completed.
+
+
+
+inserting on %ROWTYPE:
+
+SQL> declare
+    v_emp emp%rowtype;
+    v_empno emp.empno%type:=&v_empno;
+    begin
+    select * into v_emp
+    from emp
+    where empno=v_empno;
+insert into m1 values(v_emp.sal,v_emp.ename);
+    dbms_output.put_line(v_emp.ename||' '||v_emp.sal);
+    end;
+    /
+
+Output:
+
+Enter value for v_empno: 7782
+old   3:     v_empno emp.empno%type:=&v_empno;
+new   3:     v_empno emp.empno%type:=7782;
+CLARK 2450
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from m1;
+
+     REGNO NAME
+---------- --------------------
+      2450 CLARK

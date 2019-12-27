@@ -1,0 +1,29 @@
+Use of Outer values in variables:
+
+SQL> begin<<outer>>
+declare
+v_father_name varchar2(20):='Patrick';
+v_date_of_birth date:='20-Apr-1972';
+begin
+declare
+v_child_name varchar2(20):='Mike';
+v_date_of_birth date:='12-Dec-2002';
+begin
+dbms_output.put_line('Father Name: '||v_father_name);
+dbms_output.put_line('Date of Birth: '||outer.v_date_of_birth);
+dbms_output.put_line('Child Name: '||v_child_name);
+dbms_output.put_line('Date of Birth: '||v_date_of_birth);
+end;
+end;
+end outer;
+/
+
+
+Output:
+
+Father Name: Patrick
+Date of Birth: 20-APR-72
+Child Name: Mike
+Date of Birth: 20-APR-72
+
+PL/SQL procedure successfully completed.
