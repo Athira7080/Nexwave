@@ -1,0 +1,36 @@
+Exception:
+
+SQL> declare
+    v_deptno emp.deptno%type:=&v_deptno;
+    v_ename emp.ename%type;
+    begin
+    select ename into v_ename
+    from emp
+    where deptno=v_deptno;
+    exception
+    when too_many_rows then
+   dbms_output.put_line(SQLERRM);
+  when no_data_found then
+  dbms_output.put_line('no data');
+  end;
+  /
+
+
+Output:
+
+Enter value for v_deptno: 1
+old   2:     v_deptno emp.deptno%type:=&v_deptno;
+new   2:     v_deptno emp.deptno%type:=1;
+no data
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for v_deptno: 10
+old   2:     v_deptno emp.deptno%type:=&v_deptno;
+new   2:     v_deptno emp.deptno%type:=10;
+many values 
+
+PL/SQL procedure successfully completed.
+
+
