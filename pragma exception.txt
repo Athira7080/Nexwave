@@ -1,0 +1,73 @@
+pragma exception:
+
+declare
+e1 exception;
+pragma exception_init(e1,-02292);
+begin
+delete from dept
+where deptno=10;
+exception
+when e1 then
+dbms_output.put_line('u cannot delete the parent table');
+dbms_output.put_line(SQLERRM);
+end;
+/
+
+
+Output:
+
+u cannot delete the parent table
+ORA-02292: integrity constraint (SCOTT.FK_DEPTNO) violated - child record found
+
+PL/SQL procedure successfully completed.
+
+
+exception with null value:
+
+declare
+e1 exception;
+pragma exception_init(e1,-01400);
+begin
+insert into dept(deptno,dname) VALUES(NULL,'Sales');
+exception
+when e1 then
+dbms_output.put_line('Insert operation failed');
+dbms_output.put_line(SQLERRM);
+end;
+/
+
+
+Output:
+
+Insert operation failed
+ORA-01400: cannot insert NULL into ("SCOTT"."DEPT"."DEPTNO")
+
+PL/SQL procedure successfully completed.
+
+
+assignment:
+
+declare
+e1 exception;
+pragma exception_init(e1,-01722);
+begin
+delete from dept
+where deptno='&a';
+exception
+when e1 then
+dbms_output.put_line('unexpected value');
+dbms_output.put_line(SQLERRM);
+end;
+/
+
+
+Output:
+
+Enter value for a: a
+old   6: where deptno='&a';
+new   6: where deptno='a';
+unexpected value
+ORA-01722: invalid number
+
+PL/SQL procedure successfully completed.
+
