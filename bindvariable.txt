@@ -1,0 +1,61 @@
+
+ 
+
+Example1:
+
+SQL>
+SQL> Variable c number
+SQL> declare a number:=&a;
+  2  b number:=&b;
+  3  begin
+  4  :c:=a+b;
+  5  end;
+  6  /
+Enter value for a: 2
+old   1: declare a number:=&a;
+new   1: declare a number:=2;
+Enter value for b: 3
+old   2: b number:=&b;
+new   2: b number:=3;
+
+PL/SQL procedure successfully completed.
+SQL> print c;
+
+         C
+----------
+         5
+
+Example2:
+
+SQL> variable p_name varchar2(20)
+SQL> variable p_job varchar2(10)
+SQL> variable p_sal number
+SQL> declare
+  2  s_empno emp.empno%type:=&s_empno;
+  3  begin
+  4  select ename,job,sal into :p_name,:p_job,:p_sal
+  5  from emp
+  6  where empno=s_empno;
+  7  end;
+  8  /
+Enter value for s_empno: 7782
+old   2: s_empno emp.empno%type:=&s_empno;
+new   2: s_empno emp.empno%type:=7782;
+
+PL/SQL procedure successfully completed.
+
+SQL> print p_name p_job p_sal
+
+P_NAME
+--------------------------------
+CLARK
+
+
+P_JOB
+--------------------------------
+MANAGER
+
+
+     P_SAL
+----------
+      2450

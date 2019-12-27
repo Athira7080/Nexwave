@@ -1,0 +1,46 @@
+Program to add 2 nos. using PL/SQL:
+
+
+SQL>set serveroutput on;
+SQL> declare
+    num1 number:=&v_num1;
+    num2 number:=&v_num2;
+    num3 number;
+    begin
+    num3:=num1+num2;
+    dbms_output.put_line('Sum is '||num3);
+    end;
+    /
+Enter value for v_num1: 1
+old   2: num1 number:=&v_num1;
+new   2: num1 number:=1;
+Enter value for v_num2: 2
+old   3: num2 number:=&v_num2;
+new   3: num2 number:=2;
+Sum is 3
+
+PL/SQL procedure successfully completed.
+
+
+
+Sum of 2 nos. using static values in PL/SQL:
+
+ 
+SQL> set serveroutput on;
+SQL> declare
+  2  num1 number:=1;
+  3  num2 number:=1;
+  4  num3 number;
+  5  begin
+  6  num1:=10;
+  7  num2:=20;
+  8  num3:=num1+num2;
+  9  dbms_output.put_line('Sum is '||num3);
+ 10  end;
+ 11  /
+Sum is 30
+
+PL/SQL procedure successfully completed.
+
+
+
