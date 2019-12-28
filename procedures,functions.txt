@@ -1,0 +1,266 @@
+
+IN, OUT, IN/OUT:
+
+SQL> create or replace procedure pro1( a in number,b in number,c out number)
+  2  is
+  3  begin
+  4  c:=a+b;
+  5  end;
+  6  /
+
+output:
+
+Procedure created.
+
+to check for the type of parameters:
+
+SQL> desc pro1;
+PROCEDURE pro1
+ Argument Name                  Type                    In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ A                              NUMBER                  IN
+ B                              NUMBER                  IN
+ C                              NUMBER                  OUT
+
+
+to see the structure of your procedure in data dictionary:
+
+SQL> desc user_source;
+ Name                                                              Null?    Type
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ NAME                                                                       VARCHAR2(30)
+ TYPE                                                                       VARCHAR2(12)
+ LINE                                                                       NUMBER
+ TEXT                                                                       VARCHAR2(4000)
+
+
+using bind variable:
+
+SQL> variable x;
+SP2-0552: Bind variable "x" not declared.
+SQL> variable x number;
+SQL> execute pro1(10,20,:x);
+
+Output:
+
+PL/SQL procedure successfully completed.
+
+SQL> print x;
+
+         X
+----------
+        30
+
+
+to display text in our procedure:
+
+
+SQL> select text from user_source
+    where name='PRO1';
+
+Output:
+
+TEXT
+------------------------------------------------------------------------------------------------------------------------
+procedure pro1( a in number,b in number,c out number)
+is
+begin
+c:=a+b;
+end;
+
+
+Implicit creation of procedure (anonymous type):
+
+SQL> create or replace procedure pro2(v_empno in emp.empno%type,v_ename out emp.ename%type,v_sal out emp.sal%type)
+     is
+     begin
+     select ename,sal into v_ename,v_sal
+     from emp
+     where empno=v_empno;
+     end;
+     /
+
+output:
+Procedure created.
+
+SQL> desc pro2;
+
+Output:
+PROCEDURE pro2
+ Argument Name                  Type                    In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ V_EMPNO                        NUMBER(4)               IN
+ V_ENAME                        VARCHAR2(10)            OUT
+ V_SAL                          NUMBER(7,2)             OUT
+
+
+SQL> variable p_name varchar2(20);
+SQL> variable p_sal number;
+SQL> exec pro2(7782,:p_name,:p_sal);
+
+output:
+PL/SQL procedure successfully completed.
+
+
+SQL> print p_name p_sal;
+
+Output:
+P_NAME
+--------------------------------
+CLARK
+
+
+     P_SAL
+----------
+      2450
+
+
+sample:
+
+SQL> create or replace procedure  format_phone(p_phone_no IN OUT varchar2) IS
+  2      begin
+  3      p_phone_no:= '(' || substr(p_phone_no,1,3) ||
+  4                     ')' || substr(p_phone_no,4,3) ||
+  5                      '-' || substr(p_phone_no,7);
+  6  end format_phone;
+  7  /
+
+output:
+Procedure created.
+
+
+SQL> variable p_num1 varchar2(15)
+SQL> exec :p_num1:='7980269881';
+
+output:
+PL/SQL procedure successfully completed.
+
+SQL> execute format_phone(:p_num1);
+
+output:
+PL/SQL procedure successfully completed.
+
+SQL> print p_num1;
+
+Output:
+P_NUM1
+--------------------------------
+(798)026-9881
+
+
+function:
+
+SQL> create or replace function fun1(a in number,b in number)
+return number
+is
+c number;
+begin
+c:=a+b;
+return(c);
+end;
+/
+
+Output:
+Function created.
+
+
+SQL> variable z number
+SQL> exec :z:=fun1(10,20);
+
+PL/SQL procedure successfully completed.
+
+SQL> print z;
+
+         Z
+----------
+        30
+
+calling a function:
+
+SQL> select sal,fun1(sal,comm),comm from emp;
+
+
+Output:
+
+       SAL FUN1(SAL,COMM)       COMM
+---------- -------------- ----------
+       800
+      1600           1900        300
+      1250           1750        500
+      2975
+      1250           2650       1400
+      2850
+      2450
+      3000
+      5000
+      1500           1500          0
+      1100
+
+       SAL FUN1(SAL,COMM)       COMM
+---------- -------------- ----------
+       950
+      3000
+      1300
+
+14 rows selected.
+
+
+packages:
+
+package specification creation:
+
+SQL> create or replace package pack1
+is
+procedure p1(a in number,b in number,c out number);
+end;
+/
+
+output:
+Package created.
+
+package body creation:
+
+SQL>  create or replace package body pack1
+    is
+    function f1(x in number,y in number)
+    return number
+    is
+    z number;
+    begin
+    z:=x+y;
+    return(z);
+    end;
+   procedure p1(a in number, b in number,c out number)
+   is
+   begin
+    c:=f1(a,b);
+   end;
+   end;
+ SQL> /
+
+
+Output:
+
+Package body created.
+
+
+SQL> variable p number;
+SQL> exec pack.p1(10,20,:p);
+BEGIN pack.p1(10,20,:p); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PACK.P1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+SQL> exec pack1.p1(10,20,:p);
+
+PL/SQL procedure successfully completed.
+
+SQL> print p;
+
+output:
+         P
+----------
+        30

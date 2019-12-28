@@ -1,0 +1,77 @@
+User defined exception:
+
+
+SQL> set serveroutput on;
+
+SQL> declare
+  2       e1 exception;
+  3       begin
+  4       delete from dept
+  5       where deptno=&v_deptno;
+  6       if sql%notfound then
+  7       raise e1;
+  8       end if;
+  9       exception
+ 10       when e1 then
+ 11       dbms_output.put_line('no data found');
+ 12       dbms_output.put_line(sqlerrm);
+ 13       end;
+ 14       /
+
+Output:
+
+Enter value for v_deptno: 1
+old   5:      where deptno=&v_deptno;
+new   5:      where deptno=1;
+no data found
+User-Defined Exception
+
+PL/SQL procedure successfully completed.
+
+
+example2:
+
+declare
+v_name emp.ename%type;
+begin
+select ename into v_name
+from emp
+where empno=&v_empno;
+exception
+when no_data_found then
+raise_application_error(-20001,'no data found');
+dbms_output.put_line(sqlerrm);
+end;
+/
+
+Output:
+
+Enter value for v_empno: 7782
+old   6: where empno=&v_empno;
+new   6: where empno=7782;
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+    v_name emp.ename%type;
+    begin
+    select ename into v_name
+    from emp
+    where empno=&v_empno;
+    exception
+    when no_data_found then
+    raise_application_error(-20001,'no data found');
+   dbms_output.put_line(sqlerrm);
+   end;
+   /
+
+Output:
+
+Enter value for v_empno: 1
+old   6: where empno=&v_empno;
+new   6: where empno=1;
+declare
+*
+ERROR at line 1:
+ORA-20001: no data found
+ORA-06512: at line 9
