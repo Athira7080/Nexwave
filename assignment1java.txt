@@ -1,0 +1,107 @@
+program 1:
+write a java program to find the smallest of 3 nos.
+
+package student1;
+import java.util.Scanner;
+
+class smallestof3
+{
+	void small(int x,int y,int z)
+    {
+      if((x<y)||(x<z))
+      {
+    	  System.out.println("Smallest is: "+x);
+      }
+      else
+    	  if((y<x)||(y<z))
+          {
+        	  System.out.println("Smallest is: "+x);
+          }
+    	  else
+    		 
+    	    	  System.out.println("Smallest is: "+x);
+    	          
+    }
+}
+
+public class smallest {
+public static void main(String args[])
+{
+	int a,b,c;
+	Scanner in=new Scanner(System.in);
+	System.out.println("Enter 3 numbers");
+	a=in.nextInt();
+	b=in.nextInt();
+	c=in.nextInt();
+	smallestof3 s3=new smallestof3();
+	s3.small(a,b,c);
+	in.close();
+}
+}
+
+Output:
+
+Enter 3 numbers
+12
+45
+67
+Smallest is: 12
+
+program 2:
+Using java print current date and time.
+
+package student1;
+import java.util.*;
+
+public class datetime {
+	public static void main(String args[])
+	{
+	Date dt=new Date();
+	System.out.println(dt);
+
+	}
+}
+
+Output:
+
+Mon Dec 30 03:15:51 PST 2019
+
+program 3:
+write a program to print factorial of n numbers.
+
+package student1;
+import java.util.Scanner;
+
+class fact
+{
+	
+	void facto(int x)
+	{
+		int f=1;
+		for(int i=1;i<=x;i++)
+		{
+			f=f*i;
+		
+		}
+		System.out.println("Factorial of "+x+" is: "+f);
+	}
+}
+public class factorial {
+public static void main(String args[])
+{
+	int n;
+	Scanner in=new Scanner(System.in);
+	System.out.println("Enter a number");
+	n=in.nextInt();
+	fact ft=new fact();
+	ft.facto(n);
+	in.close();
+}
+}
+
+Output:
+
+Enter a number
+
+4
+Factorial of 4 is: 24
