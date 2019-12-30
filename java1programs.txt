@@ -1,0 +1,177 @@
+program 1:
+Print helloworld.
+
+package sample1;
+
+public class helloworld 
+{
+	
+public static void main(String args[])
+{
+	System.out.println("Hello World");
+}
+}
+
+Output:
+Hello World
+
+
+program 2:
+add to numbers by accepting input from the user:
+
+package student1;
+import java.util.Scanner;
+
+public class daddition {
+public static void main(String args[])
+{
+	int x,y,z;
+	Scanner sc = new Scanner(System.in);
+	x=sc.nextInt();
+     y=sc.nextInt();
+  z= x+y;
+	System.out.println("Sum is :"+z);
+	sc.close();
+}	
+}
+
+Outpupt:
+
+4
+5
+Sum is :9
+
+
+program 3:
+Write a program to display student id and name:
+
+class Studentsample
+{
+	int rollno;
+	String name;
+	void insertRecord(int r,String n)
+	{
+		rollno=r;
+		name=n;
+	}
+	void displayInformation()
+	{
+		System.out.println(rollno+" "+name);
+	}
+}
+public class student {
+	public static void main(String args[])
+	{
+		Studentsample s1=new Studentsample();
+		Studentsample s2 = new Studentsample();
+		s1.insertRecord(101, "ABC");
+		s1.displayInformation();
+		s2.insertRecord(102, "XYZ");
+		s2.displayInformation();
+	}
+
+}
+
+Output:
+
+101 ABC
+102 XYZ
+
+
+program 4:
+write a progran to print the following pattern:
+
+package student1;
+import java.util.Scanner;
+
+public class pattern1 {
+			public static void main()
+		{
+			
+			int i,n;
+	        System.out.println("Enter the limit");
+	        Scanner in = new Scanner(System.in);
+	        n=in.nextInt();
+			for(i=1;i<=n;i++)
+			{
+				if(i==1)
+				{
+					System.out.println("*");
+				}
+				else
+					if(i%2==0)
+					{
+						for(int j=0;j<=i;j++)
+						{
+							System.out.print("+ ");
+						}
+					}
+					else
+						for(int k=0;k<=i;k++)
+							{
+							System.out.print("- ");
+							}
+			}
+			System.out.println();
+	in.close();
+		}
+	}
+
+Output:
+
+Enter the limit
+5
+* 
++ + 
+* * * 
++ + + + 
+* * * * * 
++ + + + + + 
+
+
+program5:
+write a program to count the number of objects:
+
+package student1;
+
+import java.util.Scanner;
+
+class countobject
+{
+	static int count=0;
+	countobject()
+	{
+		count++;
+	}
+     
+		void display()
+	 {
+		 System.out.println("Count is: "+count);
+		 
+	 }
+}
+public class objectcount {
+public static void main(String args[])
+{
+	int n;
+	System.out.println("Enter the limit");
+	Scanner in = new Scanner(System.in);
+			n=in.nextInt();
+	for(int i=0;i<n;i++)
+	{
+	countobject co = new countobject();
+	co.display();
+	}
+	
+	in.close();
+}
+}
+
+Output:
+
+Enter the limit
+4
+Count is: 1
+Count is: 2
+Count is: 3
+Count is: 4
