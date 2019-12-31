@@ -1,0 +1,87 @@
+program:
+create a class to hold the information about books.Accept a title and the number of books required from the user.Find whether the book exists?
+
+package student1;
+
+import java.util.Scanner;
+
+class Book {
+	String title;
+	String author;
+	double cost;
+	int no_of_books;
+
+	public Book(String title, String author, double cost, int no_of_books) {
+		this.title = title;
+		this.author = author;
+		this.cost = cost;
+		this.no_of_books = no_of_books;
+	}
+
+	void display() {
+		System.out.println("Title: " + title + ", Author: " + author);
+		System.out.println("Cost: " + cost);
+	}
+}
+
+public class Q4 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter data for books.");
+		Book x[] = new Book[3];
+		
+		for (int i = 0; i < 3; i++) {
+			System.out.print("Enter title: ");
+			String title = sc.next();
+			System.out.print("Enter author: ");
+			String author = sc.next();
+			System.out.print("Enter cost: ");
+			double cost = sc.nextDouble();
+			System.out.print("Enter no of books: ");
+			int no_of_books = sc.nextInt();
+			x[i] = new Book(title, author, cost, no_of_books);
+		}
+
+		System.out.print("\nEnter title to search: ");
+		String title = sc.next();
+		System.out.print("Enter no of books required: ");
+		int no_of_books = sc.nextInt();
+
+		boolean found = false;
+		for (int i = 0; i < 3; i++) {
+			if (title.equals(x[i].title) && (no_of_books <= x[i].no_of_books)) {
+				found = true;
+				x[i].display();
+				System.out.println("Books are sufficient.");
+				System.out.println("Total cost of books: " + (x[i].cost * no_of_books));
+			}
+		}
+
+		if (found == false) {
+			System.out.println("No books found.");
+		}
+	}
+}
+
+Output:
+
+Enter data for books.
+Enter title: asda
+Enter author: dfsd
+Enter cost: 354
+Enter no of books: 5
+Enter title: sdgg
+Enter author: dgdh
+Enter cost: 656
+Enter no of books: 6
+Enter title: ghjg
+Enter author: rrty
+Enter cost: 577
+Enter no of books: 5
+
+Enter title to search: ghjg
+Enter no of books required: 3
+Title: ghjg, Author: rrty
+Cost: 577.0
+Books are sufficient.
+Total cost of books: 1731.0
