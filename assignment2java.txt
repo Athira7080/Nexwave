@@ -1,0 +1,219 @@
+program 1:
+simple inheritance:
+
+package student1;
+class employee
+{
+	float salary=40000;
+}
+
+public class programmer extends employee{
+	int bonus=10000;
+	public static void main(String args[])
+	{
+		programmer p=new programmer();
+		System.out.println("Programmer Salary is: "+p.salary);
+		System.out.println("Programmer bonus is: "+p.bonus);
+	}
+	
+	
+}
+
+Output:
+
+Programmer Salary is: 40000.0
+Programmer bonus is: 10000
+
+
+program 2:
+multilevel inheritance:
+
+package student1;
+class Animal
+{
+	
+	void eat()
+	{
+		System.out.println("Eating....");
+		
+	}
+}
+class dog extends Animal
+{
+	void bark()
+	{
+		System.out.println("barking....");
+	}
+}
+class cats extends dog
+{
+	void meow()
+	{
+		System.out.println("meows....");
+	}
+}
+public class cat extends cats{
+	public static void main(String args[])
+	{
+		cats cs=new cats();
+		cat s=new cat();
+		s.eat();
+		cs.eat();
+		s.bark();
+		s.meow();
+		
+	}
+
+}
+
+
+Output:
+
+Eating....
+Eating....
+barking....
+meows....
+
+
+program 3:
+method overloading:
+
+package student1;
+import java.util.Scanner;
+
+class Shapes
+{
+	void area(int a)
+	{
+		System.out.println("Area of square is: "+a*a);
+	}
+	void area(float a,float b)
+	{
+		System.out.println("Area of rectangle is: "+a*b);
+	}
+	void area(int b,int h)
+	{
+		System.out.println("Area of triangle is: "+((b*h)/2));
+	}
+}
+public class overloading 
+{
+public static void main(String args[])
+{
+	int x,y;
+	float a,b;
+	Scanner in=new Scanner(System.in);
+	Shapes sh=new Shapes();
+	System.out.println("Enter the values");
+	System.out.println("Enter side of a square");
+	x=in.nextInt();
+	sh.area(x);
+	System.out.println("Enter side of a rectangle");
+	a=in.nextFloat();
+	b=in.nextFloat();
+	sh.area(a,b);
+	System.out.println("Enter side of a triangle");
+	x=in.nextInt();
+	y=in.nextInt();
+	sh.area(x, y);
+	in.close();
+}
+}
+
+Output:
+Enter the values
+Enter side of a square
+3
+Area of square is: 9
+Enter side of a rectangle
+6.5
+2.1
+Area of rectangle is: 13.65
+Enter side of a triangle
+4
+6
+Area of triangle is: 12
+
+
+program 4:
+
+package student1;
+import java.util.Scanner;
+
+class account
+{	
+	Scanner inn=new Scanner(System.in);
+	int accno;
+	Long phnno;
+	int balance_amt;
+	String name;
+	void getinput()
+	{
+		
+		System.out.println("Enter the name");
+		name=inn.next();
+		System.out.println("Enter the 10 digit account number");
+		accno=inn.nextInt();
+		System.out.println("Enter the balance amount");
+		balance_amt=inn.nextInt();
+		System.out.println("Enter the phone number");
+		phnno=inn.nextLong();
+	}
+	void deposit()
+	{
+		int deposit_amt;
+		System.out.println("Enter the amount deposited");
+		deposit_amt=inn.nextInt();
+		balance_amt =balance_amt + deposit_amt;
+		System.out.println("The balance amount is: "+balance_amt);
+	}
+	void withdraw()
+	{
+		int withdraw_amt;
+		System.out.println("Enter the amount withdrawed");
+		withdraw_amt=inn.nextInt();
+		balance_amt = balance_amt - withdraw_amt;
+		System.out.println("The balance amount is: "+balance_amt);
+	}
+	void display()
+	{
+		System.out.println("name: "+name);
+		System.out.println("Account number: "+accno);
+		System.out.println("Balance amount: "+balance_amt);
+		System.out.println("Phone number: "+phnno);
+	}
+}
+public class myclass {
+public static void main(String args[])
+{
+		String ch;
+	Scanner in=new Scanner(System.in);
+	System.out.println("w for withdraw and d for deposit ");
+	ch=in.next();
+	account ac=new account();
+	ac.getinput();
+	if(ch.equals("d"))
+	{
+		ac.deposit();
+	}
+	else if(ch.equals("w"))
+	{
+			ac.withdraw();
+	}
+	else
+			System.out.println("Invalid entry");
+	ac.display();
+			
+	
+}
+}
+
+Output:
+
+Enter the amount deposited
+345
+The balance amount is: 2345
+name: adas
+Account number: 1234567890
+Balance amount: 2345
+Phone number: 9876543212
