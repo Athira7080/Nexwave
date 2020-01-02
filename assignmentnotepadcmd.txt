@@ -1,0 +1,53 @@
+
+Program:
+To insert data into database from  notepad
+
+In a notepad file named first.dat:
+
+101,Jones,3000
+102,Sam,5000
+102,Scott,2200
+
+Notepadfile2 "first.crtl":
+
+load data infile 'first.dat' 
+into table first
+fields terminated by ','
+(empno,name,sal)
+
+
+In SQL prompt:
+
+SQL> create table first(empno number,name varchar2(20),sal number(5));
+
+Output:
+
+Table created.
+
+
+In command prompt:
+
+C:\Users\lab365>cd Desktop
+
+C:\Users\lab365\Desktop>sqlldr scott/tiger control=first.crtl
+
+SQL*Loader: Release 11.2.0.1.0 - Production on Wed Jan 1 22:57:34 2020
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Commit point reached - logical record count 2
+Commit point reached - logical record count 3
+
+
+In SQL prompt:
+
+SQL> select * from  first;
+
+
+Output:
+
+     EMPNO NAME                        SAL
+---------- -------------------- ----------
+       101 Jones                      3000
+       102 Sam                        5000
+       102 Scott                      2200
