@@ -1,0 +1,243 @@
+Project in java using JDBC:
+
+//STEP 1. Import required packages
+import java.sql.*;
+import java.util.*;
+
+public class PhoneDirectory {
+ // JDBC driver name and database URL
+// static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+ static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+// static final String DB_URL = "jdbc:mysql://localhost/EMP";
+ static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+ //  Database credentials
+ static final String USER = "scott";
+ static final String PASS = "tiger";
+ 
+ public static void main(String[] args) {
+	 Scanner sc = new Scanner(System.in);
+	 boolean state = true;
+	 Connection conn = null;
+	 Statement stmt = null;
+	 System.out.println(
+			 "\r\n" + 
+			 " __          __  _                                       \r\n" + 
+			 " \\ \\        / / | |                                      \r\n" + 
+			 "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___              \r\n" + 
+			 "  _\\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\             \r\n" + 
+			 " | |\\  /\\  /  __/ | (_| (_) | | | | | |  __/             \r\n" + 
+			 " | |_\\/__\\/ \\___|_|\\___\\___/|_| |_| |_|\\___|             \r\n" + 
+			 " | __/ _ \\                                               \r\n" + 
+			 " | || (_) |                                              \r\n" + 
+			 "  \\__\\___/                        ____              _    \r\n" + 
+			 " |  __ \\| |                      |  _ \\            | |   \r\n" + 
+			 " | |__) | |__   ___  _ __   ___  | |_) | ___   ___ | | __\r\n" + 
+			 " |  ___/| '_ \\ / _ \\| '_ \\ / _ \\ |  _ < / _ \\ / _ \\| |/ /\r\n" + 
+			 " | |    | | | | (_) | | | |  __/ | |_) | (_) | (_) |   < \r\n" + 
+			 " |_|    |_| |_|\\___/|_| |_|\\___| |____/ \\___/ \\___/|_|\\_\\\r\n" + 
+			 "                                                         \r\n" + 
+			 "                                                         \r\n" + 
+			 ""
+			 );
+	 while(state) {
+	 System.out.println("Please Select an option.");
+	 System.out.printf("%-22s%-22s\n","1. See Phone Book","2. Add Entry to the Phone book");
+	 System.out.println("3. Exit");
+	 System.out.println("Enter Your Choice: ");
+	
+	 int choice = sc.nextInt();
+	 
+	 switch(choice) {
+	 case 1: 
+		 System.out.println("You have chosen to watch the Phone book.");
+		 
+		 try{
+			    Class.forName(JDBC_DRIVER);
+			
+			    conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			
+			    stmt = conn.createStatement();
+			    String sql;
+			    sql = "SELECT * FROM pb";
+			    ResultSet rs = stmt.executeQuery(sql);
+			    
+			    System.out.printf("%-22s%-22s%-22s%-22s\n","ID","NAME", "PHONE", "ADDRESS");
+			    System.out.println("--------------------------------------------------------------------------");
+			    while(rs.next()){
+			       int id  = rs.getInt("id");
+			       String name = rs.getString("name");
+			       int phone = rs.getInt("phone");
+			       String address = rs.getString("address");
+			       
+			       System.out.printf("%-22d%-22s%-22d%-22s\n",id,name, phone, address);
+			    }
+			    rs.close();
+			    stmt.close();
+			    conn.close();
+			 }catch(SQLException se){
+			    se.printStackTrace();
+			 }catch(Exception e){
+			    e.printStackTrace();
+			 }finally{
+			    try{
+			       if(stmt!=null)
+			          stmt.close();
+			    }catch(SQLException se2){
+			    }
+			    try{
+			       if(conn!=null)
+			          conn.close();
+			    }catch(SQLException se){
+			       se.printStackTrace();
+			    }
+			 }
+		 System.out.println("Enter 'Y' to continue...");
+		 if(sc.next().charAt(0) == 'y' || sc.next().charAt(0) == 'Y')
+			 continue;
+		 else 
+			 state = false;
+		 break;
+	 case 2:
+		 System.out.println("You have chosen to Enter the details.");
+		 System.out.print("Enter the name : ");
+		 String name = sc.next();
+		 System.out.print("Enter the Phone no : ");
+		 int phone = sc.nextInt();
+		 System.out.print("Enter the address of the user : ");
+		 String address = sc.next();
+		 try{
+			    Class.forName(JDBC_DRIVER);
+			
+			    conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			
+			    stmt = conn.createStatement();
+			    String sql;
+			    sql ="INSERT INTO pb " +
+			    "VALUES(sq.nextval, '"+name+"' ,"+phone+" ,'"+address+"')";
+			    stmt.executeQuery(sql);
+			    System.out.println("The data has been successfully entered");
+			    stmt.close();
+			    conn.close();
+			 }catch(SQLException se){
+			    se.printStackTrace();
+			 }catch(Exception e){
+			    e.printStackTrace();
+			 }finally{
+			    try{
+			       if(stmt!=null)
+			          stmt.close();
+			    }catch(SQLException se2){
+			    }
+			    try{
+			       if(conn!=null)
+			          conn.close();
+			    }catch(SQLException se){
+			       se.printStackTrace();
+			    }
+			 }
+		 System.out.println("Enter 'Y' to continue...");
+		 if(sc.next().charAt(0) == 'y' || sc.next().charAt(0) == 'Y')
+			 continue;
+		 else 
+			 state = false;
+		 break;
+		 
+	 case 3:
+		 System.out.println(
+				 "\r\n" + 
+				 "___                        \r\n" + 
+				 " | |_  _  _ |      _       \r\n" + 
+				 " | | )(_|| )|(  \\/(_)|_|.  \r\n" + 
+				 "                /          \r\n" + 
+				 ""
+				 );
+		 state = false;
+		 break;
+		 default :
+			 System.out.println("Invalid choice.");
+	 }
+ }}
+}
+
+
+
+Output:
+
+
+ __          __  _                                       
+ \ \        / / | |                                      
+  \ \  /\  / /__| | ___ ___  _ __ ___   ___              
+  _\ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \             
+ | |\  /\  /  __/ | (_| (_) | | | | | |  __/             
+ | |_\/__\/ \___|_|\___\___/|_| |_| |_|\___|             
+ | __/ _ \                                               
+ | || (_) |                                              
+  \__\___/                        ____              _    
+ |  __ \| |                      |  _ \            | |   
+ | |__) | |__   ___  _ __   ___  | |_) | ___   ___ | | __
+ |  ___/| '_ \ / _ \| '_ \ / _ \ |  _ < / _ \ / _ \| |/ /
+ | |    | | | | (_) | | | |  __/ | |_) | (_) | (_) |   < 
+ |_|    |_| |_|\___/|_| |_|\___| |____/ \___/ \___/|_|\_\
+                                                         
+                                                         
+
+Please Select an option.
+1. See Phone Book     2. Add Entry to the Phone book
+3. Exit
+Enter Your Choice: 
+1
+You have chosen to watch the Phone book.
+ID                    NAME                  PHONE                 ADDRESS               
+--------------------------------------------------------------------------
+3                     Ram                   123456                Chennai               
+4                     Sam                   1245879               Bangaluru             
+6                     gau                   34567890              heart                 
+7                     Founa                 546654643             vila                  
+8                     BabuShona             123456                Jind                  
+9                     fame                  32588292              baroda                
+5                     John                  548795                Delhi                 
+2                     Dawn                  1234567892            Kolkata               
+Enter 'Y' to continue...
+y
+Please Select an option.
+1. See Phone Book     2. Add Entry to the Phone book
+3. Exit
+Enter Your Choice: 
+2
+You have chosen to Enter the details.
+Enter the name : Scott
+Enter the Phone no : 987546546
+Enter the address of the user : Mumbai
+The data has been successfully entered
+Enter 'Y' to continue...
+y
+Please Select an option.
+1. See Phone Book     2. Add Entry to the Phone book
+3. Exit
+Enter Your Choice: 
+1
+You have chosen to watch the Phone book.
+ID                    NAME                  PHONE                 ADDRESS               
+--------------------------------------------------------------------------
+3                     Ram                   123456                Chennai               
+4                     Sam                   1245879               Bangaluru             
+6                     gau                   34567890              heart                 
+10                    Scott                 987546546             Mumbai                
+7                     Founa                 546654643             vila                  
+8                     BabuShona             123456                Jind                  
+9                     fame                  32588292              baroda                
+5                     John                  548795                Delhi                 
+2                     Dawn                  1234567892            Kolkata               
+Enter 'Y' to continue...
+y
+Please Select an option.
+1. See Phone Book     2. Add Entry to the Phone book
+3. Exit
+Enter Your Choice: 
+3
+
+___                        
+ | |_  _  _ |      _       
+ | | )(_|| )|(  \/(_)|_|.  
+                /        

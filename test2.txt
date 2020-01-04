@@ -1,0 +1,126 @@
+Q: inheritance:
+
+import java.util.Scanner;
+
+class point
+{
+	int x,y;
+	void display()
+	{
+		Scanner scan=new Scanner(System.in);
+		System.out.println("Enter values for x and y");
+		x=scan.nextInt();
+		y=scan.nextInt();
+		System.out.println("x coordinate is: "+x);
+		System.out.println("y coordinate is: "+y);
+	}
+}
+
+class circle extends point
+{
+	float r;
+	float ar=0;
+	void area(float r)
+	{
+		ar= (22/7)*r*r;
+		System.out.println("Area of circle: "+ar);
+	
+super.display();}
+}
+
+
+class cylinder extends circle
+{
+	int h,vol=0,r;
+	void volume(int h,int r)
+	{
+		vol=(22/7)*r*r*h;
+	System.out.println("Volume of cylinder is: "+vol);
+	}
+}
+
+public class myclass
+{
+  public static void main(String args[])
+  {
+	  
+	int x,y,a,b;
+	float r;
+	Scanner scan=new Scanner(System.in);
+	cylinder cy=new cylinder();
+
+	
+	System.out.println("Enter radius of circle");
+	r=scan.nextFloat();
+	cy.area(r);
+	
+	System.out.println("Enter radius and height of cylinder");
+	a=scan.nextInt();
+	b=scan.nextInt();
+	cy.volume(a, b);	
+  }
+ }
+
+Output:
+
+Enter radius of circle
+7
+Area of circle: 147.0
+Enter values for x and y
+4
+4
+x coordinate is: 4
+y coordinate is: 4
+Enter radius and height of cylinder
+6
+4
+Volume of cylinder is: 288
+
+
+Q2:
+Book:
+
+import java.util.*;
+public class Books {
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in);
+		Book ob = new Book("Hamlet", "Shakespeare", 45, 10);
+		Book ob2 = new Book("book 2", "Author 2", 40, 18);
+		Book ob3 = new Book("Name 3", "Book Author 3", 30, 12);
+		System.out.println("Enter the name of the book: ");
+		String b = sc.nextLine();
+		System.out.println("Enter the number of the book: ");
+		int no = sc.nextInt();
+		check(b,no, ob, ob2, ob3);
+		sc.close();
+	}
+	
+	static void check(String t, int no, Book b, Book b2, Book b3) {
+		if(t.equals(b.title) || t.equals(b3.title) || t.equals(b2.title)) {
+			System.out.println("Book is found");
+			System.out.println("The cost of the books: " + no*b.cost);
+		} else {
+			System.out.println("Not found");
+		}
+	}
+}
+
+class Book
+{	Scanner sc = new Scanner(System.in);
+	String title,author;
+	int cost, no_of_books;
+	Book(String t,String a,int c,int n) {
+		title = t;
+		author = a;
+		cost = c;
+		no_of_books = n;}
+	
+}
+
+Output:
+Enter the name of the book: 
+book 2
+Enter the number of the book: 
+2
+Book is found
+The cost of the books: 90
