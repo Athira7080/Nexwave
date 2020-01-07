@@ -1,0 +1,461 @@
+#if statement:
+
+a=0
+if a==10:
+    print('a equal to 10')
+if a>10:
+    print('a greater than 10')
+if a<10:
+    print('a less than 10')
+
+output:
+a less than 10
+
+#if-else-if:
+
+a=0
+if a==10:
+    print('a equal to 10')
+elif a>10:
+    print('a greater than 10')
+elif a<10:
+    print('a less than 10')
+
+output:
+a less than 10
+
+
+#if-else-if-else:
+
+a=0
+if a==10:
+    print('a equal to 10')
+elif a>10:
+    print('a greater than 10')
+else:
+    print('a less than 10')
+
+output:
+a less than 10
+
+#if in string:
+
+s='python'
+if 'th' in s:
+    print('substring found')
+if not s.startswith('java'): #not is used to negate the boolean value
+    print('not java')
+if s!='c++':
+    print('Not c++')
+if s[1:3]=='yt':
+    print('yt found')
+
+output:
+substring found
+not java
+Not c++
+yt found
+
+#if in list:
+
+l1=[10,20]
+l2=l1
+l3=l1.copy()
+if 20 in l1:
+    print('20 found')
+if l1 is l2:
+    print('Both refers same object')
+if id(l1)==id(l2):
+    print('Both refers same object')
+if l1==l3:
+    print('Contents are same')
+
+output:
+20 found
+Both refers same object
+Both refers same object
+Contents are same
+
+
+#if in dictionary:
+
+d={'A':10,'B':20}
+if 'B' in d:#by default it will search in keys only
+    print('Key-B found ')
+if 'B' in d.keys():
+    print('Key-B found')
+if 20 in d.values():
+    print('20 found')
+if ('A',10) in d.items():#list of items look like[('A',10),('B',20)]
+    print('item found')
+
+output:
+Key-B found 
+Key-B found
+20 found
+item found
+
+
+#pass- it does nothing and to keep any block empty
+if a==10:
+    pass
+
+
+          #for loop:
+
+s='python' #in is used as the iteration variable and a is a variable which holds each element from the collection
+for a in s:
+    print('a=',a)
+
+b='java'
+l=[20,30]
+for b in l:
+    print('b=',b)
+print('Now a and b=',a,b)#the variable will be available even after the loop ends.e.g:here 'a'
+
+
+output:
+
+a= p
+a= y
+a= t
+a= h
+a= o
+a= n
+b= 20
+b= 30
+Now a and b= n 30
+
+#dictionary:
+
+d={'A':10,'B':20}
+for k in d:
+    print('k=',k)
+
+line='-'*40
+print(line)
+
+for k in d.keys():
+    print('key=',k,'value=',d[k])
+for v in d.values():
+    print('v=',v)
+print(line)
+
+for i in d.items():#tuple=[('A',10),('B',20)]
+    print('i=',i,i[0],i[1])
+print(line)
+
+#i=('A',10)
+for i,j in d.items():
+    print(i,j)
+print(line)
+
+output:
+
+k= A
+k= B
+----------------------------------------
+key= A value= 10
+key= B value= 20
+v= 10
+v= 20
+----------------------------------------
+i= ('A', 10) A 10
+i= ('B', 20) B 20
+----------------------------------------
+A 10
+B 20
+----------------------------------------
+
+
+
+#accessing multiple lists:
+
+hosts=['h1','h2','h3']#hosts,ips is a list object
+ips=['ip1','ip2']
+z=zip(hosts,ips)#z ia a generator object
+print(z)
+print(list(z))
+for h,p in zip(hosts,ips):#zip(hosts,ips) is a generator function that generates an object each time instead of generating all the objects in one go
+#gnerator functions generates object only once
+    print(h,p)
+output:
+
+<zip object at 0x0000029D8196D980>
+[('h1', 'ip1'), ('h2', 'ip2')]
+h1 ip1
+h2 ip2
+
+
+#in java for loop is like for(i=10;i<10;i=i+2),in python it is like:
+r1=range(10)
+r2=range(1,10)
+r3=range(1,10,2)
+print(list(r1),list(r2),list(r3),sep='\n')
+print(line)
+
+r4=range(10,1,-1)
+for i in  range(2,10,2):
+    print('i=',i)
+print(line)
+
+for h in range(0,len(hosts)):
+    print(hosts[h])
+print(line)
+
+for h in range(0,len(hosts),2):
+    print(hosts[h])
+print(line)
+
+for h in hosts[::2]:
+    print('h=',h)
+print(line)
+
+comp=['IBM','DEL1','SAP','DEL2']
+for c in comp:
+    if c.startswith('DEL'):
+        print('FOUND')
+print(line)
+
+
+comp=['IBM','DEL1','SAP','DEL2']
+for c in comp:
+    if c.startswith('DEL'):
+        print('FOUND')
+        break
+print(line)
+
+print(line)
+comp=['IBM','DEL1','SAP','DEL2']
+f=0
+for c in comp:
+    if c.startswith('DEL'):
+        print('FOUND')
+        f=1
+        break
+if(f==0):
+    print('found')
+print(line)
+
+comp=['IBM','DEL1','SAP','DEL2']
+for c in comp:
+    if c.startswith('DEL'):
+        print('FOUND')
+        break
+    else:
+        print('not found')
+print(line)
+
+#for-else loop in python
+comp=['IBM','DEL1','SAP','DEL2']
+for c in comp:
+    if c.startswith('DEL'):
+        print('FOUND')
+else:
+        print('not found')
+print(line)
+
+for i in comp:
+    if i.startswith('DEL'):
+        print('Some logic')
+    print('LAST STATEMENT OF FOR')
+print(line)
+
+for i in comp:
+    if not i.startswith('DEL'):
+        continue
+    if i.startswith('DEL'):
+        print('Some logic')
+    print('LAST STATEMENT OF FOR')
+print(line)
+
+output:
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 3, 5, 7, 9]
+----------------------------------------
+i= 2
+i= 4
+i= 6
+i= 8
+----------------------------------------
+h1
+h2
+h3
+----------------------------------------
+h1
+h3
+----------------------------------------
+h= h1
+h= h3
+----------------------------------------
+FOUND
+FOUND
+----------------------------------------
+FOUND
+----------------------------------------
+----------------------------------------
+FOUND
+----------------------------------------
+not found
+FOUND
+----------------------------------------
+FOUND
+FOUND
+not found
+----------------------------------------
+LAST STATEMENT OF FOR
+Some logic
+LAST STATEMENT OF FOR
+LAST STATEMENT OF FOR
+Some logic
+LAST STATEMENT OF FOR
+----------------------------------------
+Some logic
+LAST STATEMENT OF FOR
+Some logic
+LAST STATEMENT OF FOR
+----------------------------------------
+
+
+
+                 #while
+line='-'*40;
+a=0
+while(a<10):
+    print('a=',a)
+    a=a+1#a++ wont work in python,as it is not a primitve datatype... Primitive datatypes are stored in stack...All objects are stored in heap
+print(line)
+
+s='python'
+b=0
+while b<len(s):
+    print('b=',s[b])
+    b=b+1
+print(line)
+
+l=['fn','ln','adr','a1','fn','adr','a2','fn']
+i=0
+while i<len(l):
+    if l[i]=='adr':
+        i=i+1
+        print(l[i])
+        i=i+1
+    else:
+        i=i+1
+print(line)
+
+l1=['fn','ln','adr','a1','fn','adr']
+j=0
+while j<len(l1):
+    if l1[j].startswith('a'):
+        print('Found')
+        break
+    else:
+        j=j+1
+else:
+    print('not found')
+print(line)
+
+k=0
+l2=['fn','ln','adr','a1','fn','adr']
+while k<len(l2):
+    if not l2[k].startswith('a'):
+        k=k+1
+        continue
+    print(l2[k])
+    k=k+1
+    print('Last statement of while')
+print(line)
+
+cart=[]
+while True:
+    i=input('Enter item')
+    cart.append(i)
+    ch=input('Quit(y/n)?: ')
+    if ch=='y':
+        print('cart=',cart)
+        break
+print(line)
+
+
+Output:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/while_ex.py"
+a= 0
+a= 1
+a= 2
+a= 3
+a= 4
+a= 5
+a= 6
+a= 7
+a= 8
+a= 9
+----------------------------------------
+b= p
+b= y
+b= t
+b= h
+b= o
+b= n
+----------------------------------------
+a1
+a2
+----------------------------------------
+Found
+----------------------------------------
+adr
+Last statement of while
+a1
+Last statement of while
+adr
+Last statement of while
+----------------------------------------
+Enter item affg
+Quit(y/n)?: n
+Enter itemsetse
+Quit(y/n)?: y
+cart= [' affg', 'setse']
+----------------------------------------
+
+
+#like zip(),range(),we have an eval() function
+#eval() - the eval function evaluates the “String” like a python expression and returns the result as an integer.
+a='10'
+print('a=',a)
+b=int(a)
+print('b=',b)
+c=eval(a)
+print('c=',c)
+d='[10,20,30]'
+e='Hello'
+f=list(e)
+print('f=',f)
+g=list(d)
+h=eval(d)
+print('g=',g)
+print('h=',h)
+i=10
+j=20
+k=eval('i+j')
+print('k=',k)
+
+
+output:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/eval_ex.py"
+a= 10
+b= 10
+c= 10
+f= ['H', 'e', 'l', 'l', 'o']
+g= ['[', '1', '0', ',', '2', '0', ',', '3', '0', ']']
+h= [10, 20, 30]
+k= 30
+
+
+      #file operations
+
+
+

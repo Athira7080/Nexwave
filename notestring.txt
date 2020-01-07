@@ -1,0 +1,508 @@
+#core datatypes
+#numbers
+#Strings-collection of any kind of characters
+'''
+List
+Tuples
+'''
+"""
+Dictionary
+Set
+"""
+
+Number:
+
+
+#Number
+a=10 #int
+b=20.5 #float
+c=0*2 #hex
+d=0b1010 #bin
+#e=O012 #oct
+#display
+print('Hello')
+print('Result is ',a,b,c,d,)
+print('Result is ',a,b,c,d,sep='|')
+print('Result is ',a,b,c,d,sep='|',end='.')
+#print('Test')#file=,flush=
+f=int(20)
+print(f)
+print(a)
+print(id(a))#difference
+print(type(a))# to know what kind of object it is holding
+print(type(a).__name__)#to know the type of the variable
+a=100
+print(id(a))
+b=a#refernce copy
+a=200
+print('a= ',a)
+print(id(a))
+b=300
+print(b)
+#sys.getcount- to the count of the object
+
+Output:
+
+>>> 
+====== RESTART: C:\Users\lab365\Desktop\Python programming\bin\num_exe.py ======
+Hello
+Result is  10 20.5 0 10
+Result is |10|20.5|0|10
+Result is |10|20.5|0|10.20
+10
+1796991040
+<class 'int'>
+int
+1796992480
+a=  200
+1796994080
+300
+>>> 
+
+
+String:
+
+a='Person' #declaring a string
+print(a)
+b="Person's" #use of any quotes is allowed depending on the use
+c='''PERSON'S HEIGHT XYZ"''' #prints like as the string is written in double qoutes
+d="""person"""
+print(a,b,c,d,sep='\n')
+s1='Hello'
+s2='py'
+s3=s1+s2 #concatenation
+s4=s1*10 #repeatition
+print(s3,s4,)
+line='_'*40 #documenting
+print(line)
+e='Person\'s' #\ will not be shown and ' is displayed(i.e.\ will hide)
+print(e)
+f='c:\newfolder\test.py' #simply to display a path--this will throw an error
+print(f)
+# prefix r represents raw string
+f1=r'c:\newfolder\test.py'
+print(f1)
+g='WELL COME'
+print(g)
+#to know the length of any collection(string,list,etc..)
+print(len(g))
+print(g[1])#to print a character in a particular index
+#to display substrings/slicing in any collection
+#here start index is inclusive and end index is excluded
+#if it is mentioned indexed it means u can use slicing
+print(g[1:6])
+#from beginnigng till6
+print(g[:6])
+print(g[:])#prints all
+h=g[:]#here 2 diff. obj. copies of g and h are created
+print(id(h))
+print(id(g))#same id is displayed because strings are immutable and
+#interpreter thinks y to create a new memory therefore copies or references same value with 2 objects
+#step
+print(g[1:6:1])#o/p=>ell c
+print(g[1:6:2])#o/p=>elc ,skips the second character
+#reverse
+#note that the index also reverses 
+print(g[::-1])#- means right to left
+g1='WEL COME'
+print(g1[6:1:-2])#first index is included and skips every second character till (last index+1)
+#-ve index
+'''
+w   e  l     c  o  m  e
+-8 -7 -6 -5 -4 -3 -2 -1
+'''
+print(g[-7:-2])#will be similar to normal indexing. diff. is that -ve indexing starts with negative reverse no.
+#used to retrieve last characters in a string
+#want to find last 4 characters using positive index
+print(g[len(g)-4:])
+#using negative index
+print(g[-4:])
+#string class
+i=10
+j=str(i)#value in i is stored into j as string
+#to display j.. in interpreter promt..>>>j =>o/p=> '10'
+k=str('python')
+print(i,j,k,sep='\n')
+r1=g.startswith('WEL')#returns a boolean value
+#it checks whether the string starts with the given substring
+print('r1= ',r1)
+#it checks whether the string ends with the given substring
+r2=g.endswith('ME')
+print('r2= ',r2)
+r3=g.isupper()#checks whether the string is in upper case
+r4=g.upper()#converts into upper case
+#islower()
+r5=g.islower()
+r6=g.lower() #converts into lower case
+print(r3,r4,r5,r6,sep='\n')
+#checks if only alphabets
+l='abc'
+r7=l.isalpha()
+m='123'
+r8=m.isdigit()#checks if is digit
+n='abc123'
+r9=n.isalnum()#checks whether a string is alphabet or numeric or alphanum
+print(r7,r8,r9,sep='\n')
+rr1=m.isalnum()
+print(rr1)
+#to check if LAST 3 CHARACTERS ARE DIGITS in n
+r10=n[-3:].isdigit()
+print(r10)
+#to find index
+r11=g.count('E')
+print('r11= ',r11)
+r12=g.index('E')#finds out the immediate one
+r13=g.find('E')#returns -1 if not there
+r14=g.index('E',3)
+#r15=g.index('E',3,8)#find index of E between 3 and 8
+print(r12,r13,r14,sep='\n')
+r16=g.rindex('E')
+print('r16= ',r16)
+p=' wel come '
+r17=p.strip()#trim spaces from both sides
+r18=p.lstrip() #trim left space
+r19=p.rstrip() #trim right space
+print(r17,r18,r19,sep='\n')
+#we can mention which characters or elements to remove,but works at the end only
+q='[WEL[COME][]'
+r20=q.strip(']W[E')#all the characters mention in quotes will be removed wherever it is found in the given string
+print('r20= ',r20)
+rr2=q.lstrip('w[')
+rr3=q.rstrip('][e')
+print(rr2,rr3,sep='\n')
+rr4=g.replace('E','e')
+print('rr4=',rr4)
+rr5=g.split()
+rr6=g.split('E')
+print(rr5,rr6,sep='\n')
+x=10
+y=20
+z=x+y
+r26='add of x and y is z'
+print('r26= ',r26)
+r27='add of {} and {} is {}'.format(x,y,z)
+print('r27= ',r27)
+r28='add of {1} and {0} is {2}'.format(x,y,z)
+print('r28= ',r28)
+#py ver>3.5
+r29=f'add of{x} and{y} is{z}'
+print('r29= ',r29)
+r30='-'.join(g)
+print('r30= ',r30)
+r31='xyz'.join(rr5)
+print('r31= ',r31)
+
+Output:
+
+>>> 
+====== RESTART: C:\Users\lab365\Desktop\Python programming\bin\str_ex.py ======
+Person
+Person
+Person's
+PERSON'S HEIGHT XYZ"
+person
+Hellopy HelloHelloHelloHelloHelloHelloHelloHelloHelloHello
+________________________________________
+Person's
+c:
+ewfolder	est.py
+c:\newfolder\test.py
+WELL COME
+9
+E
+ELL C
+WELL C
+WELL COME
+93793800
+93793800
+ELL C
+ELC
+EMOC LLEW
+MCL
+LL CO
+COME
+COME
+10
+10
+python
+r1=  True
+r2=  True
+True
+WELL COME
+False
+well come
+True
+True
+True
+True
+True
+r11=  2
+1
+1
+8
+r16=  8
+wel come
+wel come 
+ wel come
+r20=  L[COM
+WEL[COME][]
+[WEL[COME
+rr4= WeLL COMe
+['WELL', 'COME']
+['W', 'LL COM', '']
+r26=  add of x and y is z
+r27=  add of 10 and 20 is 30
+r28=  add of 20 and 10 is 30
+r29=  add of10 and20 is30
+r30=  W-E-L-L- -C-O-M-E
+r31=  WELLxyzCOME
+>>> 
+
+
+
+#list class
+l1=list([10,20,30])#list of 3 elements
+l2=[10,12.5,'python',['a','b']]
+'''
+  0  1      2       3
+[10,12.5,'python',['a','b']]
+ -4  -3    -2      -1
+'''
+print('l1=',l1)
+print('l2=',l2)
+#indexed access
+print('l2[1]=',l2[1])
+print('l2[2][1]=',l2[2][1])
+print('l2[-1:1:-1]=',l2[-1:1:-1])
+#add to end or append
+l2.append(200)
+print('append=',l2)
+l2.insert(2,300)#to insert a value into a particular position
+print('insert=',l2)
+l3=[10,20]
+l4=['a','b']
+l5=l3+l4#insertion occurs in diff. object
+l6=l3*10
+print('l5=',l5)
+print('l6=',l6)
+l3.extend(l4)#insertion occurs in the same object
+print('Extend=',l3)
+#remove
+r1=l5.pop()
+print('r1=',r1)
+r2=l5.pop(2)
+print('r2= ',r2,l5)
+r3=l5.remove(20)#if a python prgrm doesnt return a value 'none' is the o/p
+print('remove=',r3,l5)
+del l5[0]
+print('After del=',l5)
+#update
+print('l3=',l3)
+l3[1]='java'
+print('After update=',l3)
+#some other methods
+l6=[10,30,20]
+print('l6=',l6)
+l6.sort()#asc sort
+print('Asscending sort=',l6)
+l7=['z','a','b']
+print('l7=',l7)
+#predefined objects True,False,None  have starting letter capital
+l7.sort(reverse=True)#desc sort
+print('Descending sort=',l7)
+l8=[10,'a',20,'b']
+print('l8=',l8)
+l8.reverse()
+print('reverse=',l8)
+l8.clear()
+print('l8=',l8)
+#copy (note:also refer notebook)
+l=[10,['a','b']]
+m=l#reference copy
+n=l.copy()#shallow copy- copy defined inside the list
+print(l,m,n,sep='\n')
+#copy module =>copy(),deepcopy() function is used
+import copy
+p=copy.deepcopy(l)
+print('p=',p)
+print(id(l[0]),id(p[0]))
+print(id(l[1]),id(p[1]))
+#adv of reference copy
+cp=copy.deepcopy#copy.deepcopy is assigned to cp,now only cp needs to be used to call this copy function
+q=cp(l)
+print('q=',q)
+
+
+Output:
+
+>>> 
+= RESTART: C:\Users\lab365\Desktop\Python programming\bin\list_ex.py =
+l1= [10, 20, 30]
+l2= [10, 12.5, 'python', ['a', 'b']]
+l2[1]= 12.5
+l2[2][1]= y
+l2[-1:1:-1]= [['a', 'b'], 'python']
+append= [10, 12.5, 'python', ['a', 'b'], 200]
+insert= [10, 12.5, 300, 'python', ['a', 'b'], 200]
+l5= [10, 20, 'a', 'b']
+l6= [10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20]
+Extend= [10, 20, 'a', 'b']
+r1= b
+r2=  a [10, 20]
+remove= None [10]
+After del= []
+l3= [10, 20, 'a', 'b']
+After update= [10, 'java', 'a', 'b']
+l6= [10, 30, 20]
+Asscending sort= [10, 20, 30]
+l7= ['z', 'a', 'b']
+Descending sort= ['z', 'b', 'a']
+l8= [10, 'a', 20, 'b']
+reverse= ['b', 20, 'a', 10]
+l8= []
+[10, ['a', 'b']]
+[10, ['a', 'b']]
+[10, ['a', 'b']]
+p= [10, ['a', 'b']]
+1796991040 1796991040
+87988904 87994440
+q= [10, ['a', 'b']]
+>>>
+
+
+
+
+#tuple class
+t1=tuple([10,20,30])#declaring a tuple
+t2=(10,12.5,'python',['a','b'],(10,20))
+'''
+  0  1     2          3        4
+(10,12.5,'python',['a','b'],(10,20))
+-5   -4    -3        -2         -1
+'''
+print('t2=',t2)
+print('t2[1]=',t2[1])
+print('t2[-4:4:2]=',t2[-4:4:2])#slicing
+i=t2.index('python')
+print('i=',i)
+c=t2.count(12.5)
+print('c=',c)
+#tuples can be converted to list
+t=(10,20)
+print('Tuple=',t)
+l=list(t)
+print('Converted List=',l)
+l1=[30,40]
+#converting a list into touple
+print('List=',l1)
+t1=tuple(l1)
+print('Converted Tuple=',t1)
+
+
+Output:
+
+>>> 
+= RESTART: C:\Users\lab365\Desktop\Python programming\bin\tuple_ex.py
+t2= (10, 12.5, 'python', ['a', 'b'], (10, 20))
+t2[1]= 12.5
+t2[-4:4:2]= (12.5, ['a', 'b'])
+i= 2
+c= 1
+Tuple= (10, 20)
+Converted List= [10, 20]
+List= [30, 40]
+Converted Tuple= (30, 40)
+
+
+
+#dictionary class
+l=['python',10,'Blr']
+print('Dictionary = ',l)
+print('l[0]=',l[0])
+d={'course':'python','dur':10,'loc':'blr'}
+print('d=',d)
+print("d['course']=",d['course'])
+#unordered
+
+
+#add or update
+d['course']=['c++','java']#previously it had a string object ,now it has a list
+print('d=',d)
+
+e=d.copy()
+print('e=',e)
+#remove
+r1=d.pop('course')
+print('pop=',r1,d)#no keys are provided
+
+del d['dur']
+print('After del=',d)
+
+r2=d.popitem()#it contains both keys and values
+print('r2=',r2,d)
+
+#other methods
+k=e.keys()
+print('Keys are=',k)
+v=e.values()
+print('Values are=',v)
+i=e.items()
+print('Items are=',i)
+
+Output:
+
+= RESTART: C:\Users\lab365\Desktop\Python programming\bin\dictionary_ex.py
+Dictionary =  ['python', 10, 'Blr']
+l[0]= python
+d= {'course': 'python', 'dur': 10, 'loc': 'blr'}
+d['course']= python
+d= {'course': ['c++', 'java'], 'dur': 10, 'loc': 'blr'}
+e= {'course': ['c++', 'java'], 'dur': 10, 'loc': 'blr'}
+pop= ['c++', 'java'] {'dur': 10, 'loc': 'blr'}
+After del= {'loc': 'blr'}
+r2= ('loc', 'blr') {}
+Keys are= dict_keys(['course', 'dur', 'loc'])
+Values are= dict_values([['c++', 'java'], 10, 'blr'])
+Items are= dict_items([('course', ['c++', 'java']), ('dur', 10), ('loc', 'blr')])
+>>> 
+
+
+#unordered collection
+# no index
+#no key
+#mutable
+#hold only immutable objects
+#UNIQUE values
+s={10,10,20,'py'}
+print('set s=',s)
+s.add(30)
+s.add(30)
+print('add=',s)
+r1=s.remove(10)
+print('remove=',s,r1)
+r2=s.pop()
+print('pop=',r2,s)
+s1={10,20,30,40}
+s2={30,40,50,60}
+s3=s1.union(s2)
+print('union=',s3)
+s4=s1.intersection(s2)
+print('Intersection=',s4)
+s5=s1.difference(s2)
+s6=s1-s2
+print(s5,s6,sep='\n')
+
+
+Output:
+
+>>> 
+= RESTART: C:\Users\lab365\Desktop\Python programming\bin\set_ex.py
+set s= {10, 20, 'py'}
+add= {10, 20, 30, 'py'}
+remove= {20, 30, 'py'} None
+pop= 20 {30, 'py'}
+union= {40, 10, 50, 20, 60, 30}
+Intersection= {40, 30}
+{10, 20}
+{10, 20}
+>>>  

@@ -1,0 +1,181 @@
+#1st argument-filepath
+#2nd-mode of opening the file(read,write,execute)
+de='-'*40
+f1=open('out1.txt','w')#output is seen inside the folder where u create the code file..If u double click and open the file, it will open in pycharm only
+#whenever we try to enter the data it will create a new file i.e.rewrites the file
+x=10
+s='python\n'
+x=str(x)+'\n'
+#func expects a strting as input
+f1.write(x)
+f1.write(s)#the output will be seen in thenewly created file 'out1.txt'
+#the data is stored in a buffer after the execution.Only when u close the connection the data is transferred into the out1.txt file
+#without closing the connection, to transfer data from buffer to file- flush() is used
+f1.flush()#the data wrote till now will be saved to the file
+#writing data to file- 1st method- write()
+#2nd method-keep it in a collection and then pass the data
+l=[x,s]
+f1.writelines(l)
+f1.close()#to close the connection between the program and file
+print(de)
+f2=open('out1.txt','r')#reading a file
+#3 method
+#if file is not present it will not create a new file, but it will throw error
+r1=f2.read()#it reads as '10\npy\n10\npy'
+print('r1=',r1)#while printing \n is replaced with new line
+print(de)
+f2.seek(0)
+r2=f2.read()
+print('r2=',r2)#no output comes
+#there is a pointer called seek, which is a character based seek pointer. Whenever u open a file in write mode,the pointer first points to the first character or line
+#when u open the file in read mode the pinter moves as we read each line.So at the end the pointer will be in the end.Now if u try to write some data from file
+#the output wont come as seek is in the end,so set it to the beginning of the file f2.seek(0)..Now o/p will come
+#2nd way
+#read() will take the whole file as a string but readline() each line is taken at a time
+print(de)
+f2.seek(0)
+r3=f2.readline()
+print('r3=',r3)
+while True:
+    line=f2.readline()
+    if line=='':#EOF
+        break
+    else:
+        print(line)
+print(de)
+#3rd way
+f2.seek(0)
+r4=f2.readlines()
+print('r4=',r4)
+print(de)
+r5=[]
+for l in r4:
+    l=l.strip()
+    r5.append(l)
+print('r5=',r5)
+print(de)
+#another ways to read
+#1
+f2.seek(0)
+for x in f2:
+    print('line=',x)
+print(de)
+#2
+f2.seek(0)
+r6=list(f2)
+print('r6=',r6)
+print(de)
+f2.seek(0)
+r7=tuple(f2)
+print('r7=',r7)
+print(de)
+l1=['h1','h2']
+l2=['ip1','ip2']
+d1=dict(zip(l1,l2))
+print('d1=',d1)
+print(de)
+e=enumerate(l1)#will give collection of nos. starting from index 0....
+## Enumerate() in Python Enumerate() method adds a counter to an iterable and returns it in a form of enumerate object.
+## This enumerate object can then be used directly in for loops or be converted into a list of tuples using list() method.
+print('e as a list=',list(e))
+print(de)
+f2.seek(0)
+d2=dict(enumerate(f2))
+print('d2=',d2)
+f2.close()
+print(de)
+
+#append mode
+f3=open('out1.txt','a')
+f4=open('out2.csv','a')
+print(20,'java',sep='\n',file=f3,flush=True)#writes value into out1.txt
+#by defaut value of flush=false
+print(20,'java',sep='\n',file=f4)#writes value into out2.txt
+f3.close()
+f4.close()
+
+#'w'-> write only mode
+#'r'->read only mode
+#'a'-> append only mode
+#'w+'->write,read
+#'r+'->read,write
+#'a+'->append,read
+#in w+ if the file doesnot exist a new file is created..'w : Opens in write-only mode. ... w+ : Opens a file for writing and reading. wb+ : Opens a file for writing and reading in binary mode'
+#in r+ if file is not there error is thrown
+#in a+ if the file is avilable it appends into the file,else a new file is created
+#'wb'-> write only mode in binary
+#'rb'->read only mode in binary
+#'ab'-> append only mode in binary
+#'w+b'->write,read in binary
+#'r+b'->read,write in binary
+#'a+b'->append,read in binary
+
+
+output:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/file_ops.py"
+----------------------------------------
+r1= 10
+python
+10
+python
+
+----------------------------------------
+r2= 10
+python
+10
+python
+
+----------------------------------------
+r3= 10
+
+python
+
+10
+
+python
+
+----------------------------------------
+r4= ['10\n', 'python\n', '10\n', 'python\n']
+----------------------------------------
+r5= ['10', 'python', '10', 'python']
+----------------------------------------
+line= 10
+
+line= python
+
+line= 10
+
+line= python
+
+----------------------------------------
+r6= ['10\n', 'python\n', '10\n', 'python\n']
+----------------------------------------
+r7= ('10\n', 'python\n', '10\n', 'python\n')
+----------------------------------------
+d1= {'h1': 'ip1', 'h2': 'ip2'}
+----------------------------------------
+e as a list= [(0, 'h1'), (1, 'h2')]
+----------------------------------------
+d2= {0: '10\n', 1: 'python\n', 2: '10\n', 3: 'python\n'}
+----------------------------------------
+
+Process finished with exit code 0
+
+out2.txt
+
+20
+java
+20
+java
+20
+java
+
+out1.txt
+
+10
+python
+10
+python
+20
+java
