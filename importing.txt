@@ -1,0 +1,138 @@
+#addmodule.py
+
+msg='Module Demo'
+def add(a,b):
+    return a+b
+if __name__=='__main__':#after adding this here, the name=... is not printed in mainprogram file
+    print('xyz=', msg)
+    print('name=', __name__)
+
+#then create another file under lib called mainprogram.py
+#start->edit s/m environment->env var->under s/m var create new var->give a name and the value is the path till the lib file->ok
+
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/lib/addmodule.py"
+xyz= Module Demo
+name= __main__
+
+Process finished with exit code 0
+
+
+
+#mainprogram.py
+
+
+#import to use variables or funcs from other files
+
+#setting an env var<-1
+#by programmatically<-2
+#1->
+import addmodule
+print(addmodule.msg)
+print(addmodule.add(10,20))
+line='-'*40
+print(line)
+import sys
+print(sys.path)
+#sys.path.append(r'C:\Users\lab365\Desktop\Python programming\lib')
+print(line)
+#here the xyz=... is printed here also,so in order to avoid it->in addmodule file  include print( __name__)
+#when we add the if statement in addmodule the 'name=....' is not displayed here
+#2->
+import addmodule as a
+print(a.msg)
+print(a.add(10,20))
+print(line)
+#3rd way to import a file into another file->
+from addmodule import msg,add
+print(msg)
+print(add(20,30))
+print(line)
+#4->
+from addmodule import msg as m,add as a
+print(m)
+print(a(10,20))
+print(line)
+#5->
+from addmodule import *
+print(msg)
+print(add(20,40))
+print(line)
+'''
+all files are not saved in same directory because it is very difficult to manage,so we create diff. packages or directory
+create a new directory under lib named project . Right click project and create new directory named net. Copy paste the 
+contents of addmodule to net
+'''
+#various ways of accesing contents of addmodule file using directory
+import project.net.addmodule
+print(project.net.addmodule.msg)
+print(line)
+import project.net.addmodule as a
+print(a.msg)
+print(line)
+from project.net.addmodule import msg,add
+print(msg)
+print(line)
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/lib/mainprogram.py"
+Module Demo
+30
+----------------------------------------
+['C:\\Users\\lab365\\Desktop\\Python programming\\lib', 'C:\\Users\\lab365\\Desktop\\Python programming', 'C:\\Users\\lab365\\Desktop\\Python programming\\lib', 'C:\\Python38\\python38.zip', 'C:\\Python38\\DLLs', 'C:\\Python38\\lib', 'C:\\Python38', 'C:\\Users\\lab365\\Desktop\\Python programming\\myvenv1', 'C:\\Users\\lab365\\Desktop\\Python programming\\myvenv1\\lib\\site-packages']
+----------------------------------------
+Module Demo
+30
+----------------------------------------
+Module Demo
+50
+----------------------------------------
+Module Demo
+30
+----------------------------------------
+Module Demo
+60
+----------------------------------------
+Module Demo
+----------------------------------------
+Module Demo
+----------------------------------------
+Module Demo
+----------------------------------------
+
+Process finished with exit code 0
+
+#__init__.py
+
+print('Inside Init')
+
+#after adding __init__ file o/p of mainprogram is:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/lib/mainprogram.py"
+Module Demo
+30
+----------------------------------------
+['C:\\Users\\lab365\\Desktop\\Python programming\\lib', 'C:\\Users\\lab365\\Desktop\\Python programming', 'C:\\Users\\lab365\\Desktop\\Python programming\\lib', 'C:\\Python38\\python38.zip', 'C:\\Python38\\DLLs', 'C:\\Python38\\lib', 'C:\\Python38', 'C:\\Users\\lab365\\Desktop\\Python programming\\myvenv1', 'C:\\Users\\lab365\\Desktop\\Python programming\\myvenv1\\lib\\site-packages']
+----------------------------------------
+Module Demo
+30
+----------------------------------------
+Module Demo
+50
+----------------------------------------
+Module Demo
+30
+----------------------------------------
+Module Demo
+60
+----------------------------------------
+Inside Init                                      //note the print stmnt from __init__ file is displayed
+Module Demo
+----------------------------------------
+Module Demo
+----------------------------------------
+Module Demo
+----------------------------------------
+
+Process finished with exit code 0

@@ -1,0 +1,58 @@
+import sqlite3# to connect to sqlite databases
+con=sqlite3.connect('mydb.sqlite3')
+#to connect vto other databases than sqlite
+#import pymysql
+#con=pymysql.connect(user='',password='',host='' ,port='',database='')
+#now we need to create a folder
+#create a cursor after installing db browser
+cur=con.cursor()
+#cursor is to communicate with db
+query=''' CREATE TABLE IF NOT EXISTS LOGDATA(
+IP VACHAR(100),
+DATE VARCHAR(100),
+PICS VARCHAR(100),
+URL VARCHAR(100))'''
+cur.execute(query)
+#press f5
+#in db browser we can see the columns under table icon
+#read website contents
+import urllib.request as u
+myurl='https://www.jafsoft.com/searchengines/log_sample.html'
+f=u.urlopen(myurl)
+print('f=',f)
+import re
+for line in f:
+    #print(line)
+    #print(type(line))
+    line=line.decode()
+    #print(type(line))
+    m=re.match('(\d\d\d\.\d{3}[.]\d{1,3}\.[0-9]{3}).*',line)#if there is no math o/p is None
+    #\d identifies digit
+    #'.' is used to represent any character ->for that \. is used
+    #\d{3} -> used to repeatedly refer to similar objects.here.,\d\d\d\. ->\d{3}
+    #[.]->. only
+    #. ->any char
+    #\d ->any digit.
+    #\D ->non-digit
+    #since it is identifying something we will use identifiers
+    # other way to represent digit is by mentioning the index,here.,[0-9]-.this will identify only one digit
+    #need to specify there are other characters also here, '.' and also:-
+    # * -> 0 or more
+    # + -> 1 or more
+    # ? -> 0 or 1
+    #[] can identify only one charcater ->if we write [abc],it will match with any of the character. For matching all we should write [abc]{3}
+    if m!=None:
+        ip=m.group(1)#group(1) means the first one
+        print(ip)
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/regex.py"
+f= <http.client.HTTPResponse object at 0x0000025A4A95A9A0>
+123.123.123.123
+123.123.123.123
+123.123.123.123
+123.123.123.123
+123.123.123.123
+123.123.123.123
+123.123.123.123
+
+Process finished with exit code 0

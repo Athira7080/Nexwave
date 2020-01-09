@@ -1,0 +1,518 @@
+#comprehensioms.py:
+
+Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, set, dictionary etc.) 
+using sequences which have been already defined.
+
+l1=[i for i in range(10)]
+print('l1=',l1)
+l2=[i*i for i in l1 if i%2==0]
+print('l2=',l2)
+f=open('out1.txt')
+l3=[line.strip() for line in f]
+print('l3=',l3)
+f2=open(r'C:\Users\lab365\Desktop\Python programming\log\serverlog.txt')
+ip=[line.split()[0] for line in f2 if line[:3].isdigit()] #to get the ip from serverlog.txt file created earlier
+print('ip=',ip)
+f2.seek(0)
+ip2=(line.split()[0] for line in f2 if line[:3].isdigit())# a way to create a generator object
+print('ip2=',ip2)
+ip2=[line.split()[0] for line in f2 if line[:3].isdigit()]
+print('ip2 tuple=',ip2)
+f2.seek(0)
+images=[line.split()[6].lstrip('/pics/') if 'pics' in line.split()[6] else 'no image' for line in f2 if line[:3].isdigit()]
+#here right side condition is executed first
+#if the for is true it will go in to the if ,else it will display 'no image'
+print('images=',images)
+hosts=['h1','h2']
+ips=['ip1','ip2']
+d={k:v for k,v in zip(hosts,ips)}
+print('d=',d)
+
+
+Output:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/comprehensions.py"
+l1= [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+l2= [0, 4, 16, 36, 64]
+l3= ['10', 'python', '10', 'python', '20', 'java']
+ip= ['123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123']
+ip2= <generator object <genexpr> at 0x00000209AE60E970>
+ip2 tuple= ['123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123']
+images= ['wpaper.gif', 'no image', '5star2000.gif', '5star.gif', 'a2hlogo.jpg', 'no image']
+d= {'h1': 'ip1', 'h2': 'ip2'}
+
+
+#funcs_1.py:
+
+functions are repeatable block of codes. In python it starts with a 'def'.
+def add():
+    a=10
+    b=20
+    c=a+b
+    print('c=',c)
+add()#in order to get the o/p one should call the function.We can call a func one or more times
+def get_ips():
+    f2 = open(r'C:\Users\lab365\Desktop\Python programming\log\serverlog.txt')#we can access earlier files in current files by providing the full path of that file
+    ips = [line.split()[0] for line in f2 if line[:3].isdigit()]  # to get the ip from serverlog.txt file created earlier
+    print('ips=', ips)
+get_ips()
+print('ips=',ips)#here it will trhow an error because a func has a separate namespace therefore we cannot access a variable outside that func
+
+Output:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/funcs_1.py"
+c= 30
+ips= ['123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123']
+Traceback (most recent call last):
+  File "C:/Users/lab365/Desktop/Python programming/bin/funcs_1.py", line 14, in <module>
+    print('ips=',ips)
+NameError: name 'ips' is not defined
+
+Process finished with exit code 1
+
+
+
+I.
+def add():
+    a=10
+    b=20
+    c=a+b
+    #return c
+    #pirnt('After return')#wont print because after the return func no code will be executed in the func block
+
+add()#no output will come because the value returned by the function needs to be saved in a variable
+r1=add()
+print('r1=',r1)
+#when we comment out return and print stmnt it will print the value as none(none is the default value)
+
+o/p: r1= None
+
+II.
+def add():
+    a=10
+    b=20
+    c=a+b
+    return c #here if u add return after print(see below)
+    print('After return')#wont print because after the return func no code will be executed in the func block
+    return#o/p is none
+
+add()
+r1=add()
+print('r1=',r1)
+#when we comment out return and print stmnt it will print the value as none(none is the default value)
+
+o/p: r1= 30
+
+#funcs_2.py:
+
+def add():
+    a=10
+    b=20
+    c=a+b
+    #return c
+    #pirnt('After return')#wont print because after the return func no code will be executed in the func block
+    #'return a,b,c'#will return the o/p as a tuple
+#if u  want to return the o/p as list
+    #return [a,b,c]
+    return (a+b)/(a-b)
+add()#no output will come because the value returned by the function needs to be saved in a variable
+r1=add()
+print('r1=',r1)
+#when we comment out return and print stmnt it will print the value as none(none is the default value)
+
+o/p: r1= -3.0
+
+Process finished with exit code 0
+
+#funcs_3.py:
+
+#passing arguments
+#1st-positional args
+def add(a,b):
+    return a+b
+r=add(10,20)
+print('r=',r)
+# in files
+def get_ips(file_path,mode):
+    f=open(file_path)
+    if file_path.endswith('.csv'):
+        ips=[line.split(',')[0] for line in  f]
+        return ips
+    else:
+        ips=[line.split()[0] for line in f]
+        return ips
+r=get_ips('log_report.txt','r')
+print('r=',r)
+
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/funcs_3.py"
+r= 30
+r= ['IP', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123']
+
+Process finished with exit code 0
+
+
+#funcs_4.py
+
+# passing arguments
+#with default values
+# 1st-positional args
+def add(a,b=10):#10 will be set as the default value for b
+    return a+b
+r=add(10,20)
+print('r=',r)
+# in files
+def get_ips(file_path,mode='r'):
+    f=open(file_path)
+    if file_path.endswith('.csv'):
+        ips=[line.split(',')
+             [0] for line in  f]
+        return ips
+    else:
+        ips=[line.split()[0] for line in f]
+        return ips
+r=get_ips('log_report.txt','r')
+print('r=',r)
+
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/funcs_4.py"
+r= 30
+r= ['IP', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123', '123.123.123.123']
+
+Process finished with exit code 0
+
+#funcs_5.py:
+I part:
+# variable args
+def add(a,b=10,*c):#n number of arguments can be passed
+    #no need of function overloading here because it can accept n number of arguments
+    print('Extra Arguments passed=',c)
+    r=a+b+sum(c)
+    return r
+res1=add(10)
+print('res1=',res1)
+print('_'*40)
+res2=add(10,20,30,40,50)#here a=10,b=20&30,40,50 all went to c
+print('res2=',res2)
+#if we use positional args we can use only one command
+
+o/p:
+
+Extra Arguments passed= ()
+res1= 20
+________________________________________
+Extra Arguments passed= (30, 40, 50)
+res2= 150
+
+II part:
+def telnet(host=None,port=None,*cmds):#cmds=>packing
+    import subprocess#subprocess is a built in func.It i s used to execute the system commands
+    result=[]
+    for each_cmd in cmds:
+        r=subprocess.check_output(each_cmd,shell='True')#shell because it is in shell(shell command)
+        result.append(r)
+    return result
+r=telnet(0,0,'dir',' type log_report.csv')
+print('r=',r)
+f=open('cmd_out.txt','w')#the o/p will be visible in this file which is created separately in the bin folder
+r=[line.decode() for line in r]
+f.writelines(r)#the o/p will be an error telling that it is in bytes and writeline expects a string ,so add the above code line
+f.close()
+c=['dir','type log_report.txt']
+r2=telnet(0,0,*c)#it will unpack
+
+o/p:
+cmd_out.txt
+
+ Volume in drive C has no label.
+
+ Volume Serial Number is 3CCB-FA14
+
+
+
+ Directory of C:\Users\lab365\Desktop\Python programming\bin
+
+
+
+01/07/2020  10:03 PM    <DIR>          .
+
+01/07/2020  10:03 PM    <DIR>          ..
+
+01/07/2020  10:03 PM             2,092 cmd_out.txt
+
+01/07/2020  08:27 PM             1,039 comprehensions.py
+
+01/06/2020  07:53 PM               636 dictionary_ex.py
+
+01/07/2020  12:45 AM               325 eval_ex.py
+
+01/07/2020  01:38 AM             3,771 file_ops.py
+
+01/06/2020  10:46 PM             2,409 for_ex.py
+
+01/07/2020  08:29 PM               710 funcs_1.py
+
+01/07/2020  08:39 PM               560 funcs_2.py
+
+01/07/2020  08:52 PM               394 funcs_3.py
+
+01/07/2020  09:26 PM               482 funcs_4.py
+
+01/07/2020  10:03 PM             1,177 funcs_5.py
+
+01/06/2020  09:33 PM             1,207 if_ex.py
+
+01/06/2020  02:48 AM             1,740 list_ex.py
+
+01/07/2020  02:34 AM               490 log_report.csv
+
+01/07/2020  02:34 AM               488 log_report.txt
+
+01/05/2020  10:26 PM               678 num_exe.py
+
+01/07/2020  01:36 AM                34 out1.txt
+
+01/07/2020  01:36 AM                30 out2.csv
+
+01/07/2020  02:34 AM             1,905 process_log.py
+
+01/06/2020  03:29 AM               428 set_ex.py
+
+01/06/2020  01:03 AM             3,958 str_ex.py
+
+01/05/2020  08:36 PM                26 test.py
+
+01/06/2020  02:57 AM               119 tuple_ex.py
+
+01/07/2020  12:38 AM             1,087 while_ex.py
+
+              24 File(s)         25,785 bytes
+
+               2 Dir(s)  849,494,454,272 bytes free
+
+IP,DATE,PICS,URL
+
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+
+
+#funcs_6.py:
+
+#keyword only args- here args can be passed randomly, One can even skip an args if a default value is present
+def add(a,b=10,*c,d,e):#d and e is the keyword only args here
+    #because *c will receive all the i/p after 1st 2,so we should provide d and e with values
+    #before * element it is positional args and after * it is keyword args..
+    r=a+b+sum(c)+d+e
+    return r
+res=add(10,20,30,40,50,e=60,d=70)
+print('res=',res)
+
+def telnet(*cmds,h=None,p=None):#None means no need to pass arg values
+    return'Hello'
+res2=telnet()
+res3=telnet('dir')
+print('res2=',res2)
+print('res3=',res3)
+res4=telnet('dir',p=1,h=2)
+print('res4=',res4)
+#if we add 'telnet(h,p)'->  is a positional arg, to make it keyword telnet(*h,p)
+
+o/p:
+
+res= 280
+res2= Hello
+res3= Hello
+res4= Hello
+
+
+#funcs_8.py:
+
+#variable keyword only argument
+def add(a,b=10,*c,d,e,**f):#c is to capture extra args (kept in a tuple)and f is to capture extra keyword only args(kept in a dictionary)
+    #here a and b are positional args,d and e are keyword args
+    print('Extra keyword only args=',f)
+    r=a+b+sum(c)+d+e+sum(f.values())
+    return r
+#json will store result as name value pair or as python dictionary
+r1=add(10,d=20,e=30)
+print('r1=',r1);
+print('-'*40)
+r2=add(10,20,30,40,50,d=60,e=70,x=80,y=90)#here x and y will become a dictionary
+print('r2=',r2)
+
+d={'d':50,'e':60,'x':70}
+res3=add(10,20,30,40,**d)#30,40 will go to c
+print('res3=',res3)
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/funcs_7.py"
+Extra keyword only args= {}
+r1= 70
+----------------------------------------
+Extra keyword only args= {'x': 80, 'y': 90}
+r2= 450
+Extra keyword only args= {'x': 70}
+res3= 280
+
+Process finished with exit code 0
+
+#scopes.py:
+
+I.
+normal scope(local,global):
+
+x=10#global scope
+def  f1():
+    x=20#enclosed scope because it is local as well as accessible to inner functions
+    def f2():#here f1 and f2 are each objects
+        x=30#local scope
+        print('f2=',x)
+    f2()
+    print('f1=',x)
+f1()
+print('Global=',x)
+#f1.f2() wont work outside or globally. We can create a return object and then access the value
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/scopes.py"
+f2= 30
+f1= 20
+Global= 10
+
+Process finished with exit code 0
+
+II.
+nonlocal scopes:
+x=10#global scope
+def  f1():
+    x=20#enclosed scope because it is local as well as accessible to inner functions
+    def f2():#here f1 and f2 are each objects
+        #x=30#local scope
+        nonlocal x #refers to the enclosed variable
+        x=200
+        print('f2=',x)
+    f2()
+    print('f1=',x)
+f1()
+print('Global=',x)
+print('-'*40)
+#f1.f2() wont work outside or globally. We can create a return object and then access the value
+x=10#global scope
+def  f1():
+    x=20#enclosed scope because it is local as well as accessible to inner functions
+    def f2():#here f1 and f2 are each objects
+        #x=30#local scope
+        global x #refers to the enclosed variable
+        y=x
+        print('f2=',x,y)
+    f2()
+    print('f1=',x)
+f1()
+print('Global=',x)
+print('-'*40)
+x=10#global scope
+def  f1():
+    x=20#enclosed scope because it is local as well as accessible to inner functions
+    def f2():#here f1 and f2 are each objects
+        #x=30#local scope
+        global y #refers to the enclosed variable
+        y=25
+        print('f2=',x)
+    f2()
+    print('f1=',x)
+f1()
+print('Global=',x,y)
+print('-'*40)
+def  f1():
+
+    def f2():#here f1 and f2 are each objects
+        #x=30#local scope
+
+        print('f2=',x)
+    f2()
+    print('f1=',x)
+f1()
+print('Global=',x,y)
+print(dir(__builtins__))#all types of exceptions are shown or listed here
+print('-'*40)
+
+op:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/scopes.py"
+f2= 200
+f1= 200
+Global= 10
+----------------------------------------
+f2= 10 10
+f1= 20
+Global= 10
+----------------------------------------
+f2= 20
+f1= 20
+Global= 10 25
+----------------------------------------
+f2= 10
+f1= 10
+Global= 10 25
+['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning', 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError', 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False', 'FileExistsError', 'FileNotFoundError', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError', 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'ModuleNotFoundError', 'NameError', 'None', 'NotADirectoryError', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError', 'RecursionError', 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning', 'StopAsyncIteration', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'WindowsError', 'ZeroDivisionError', '__build_class__', '__debug__', '__doc__', '__import__', '__loader__', '__name__', '__package__', '__spec__', 'abs', 'all', 'any', 'ascii', 'bin', 'bool', 'breakpoint', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars', 'zip']
+
+Process finished with exit code 0
+
+#why_nonlocal.py
+
+count=0
+def create_acc():
+    global count
+    count=count+1
+
+def delete_acc():
+    global count
+    count=count-1
+
+
+create_acc()
+#print(count) output=1
+create_acc()
+#print(count) output=2
+count=100
+delete_acc()
+print('Total accounts=',count)
+
+def acc():
+    c=0
+    def ca():
+        nonlocal c
+        c=c+1
+    def da():
+        nonlocal c
+        c=c-1
+    def ta():
+        print('Total=',c)
+    return ca,da,ta
+#x=(10,20) is a tuple
+#x,y=(10,20) x=10 and y=20
+f1,f2,f3=acc()#f1=ca,f2=da,f3=ta
+f1()#value of c will be 1
+f1()#value of c will become 2
+c=100#global scope
+f2()#local scope,value of c will become 1
+f3()
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/why_nonlocal.py"
+Total accounts= 99
+Total= 1
+
+Process finished with exit code 0
