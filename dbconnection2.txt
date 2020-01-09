@@ -1,0 +1,173 @@
+ #to access date
+    m= re.match('(\d\d\d\.\d{3}[.]\d{1,3}\.[0-9]{3}).*?(\d{1,2}/[a-zA-Z]{3}/\d{4}).*',line)
+        if m!=None:
+        ip=m.group(1)#group(1) means the first one
+        print(ip)
+        dt=m.group(2)
+        print(dt)
+
+o/p:
+123.123.123.123
+26/Apr/2000
+123.123.123.123
+26/Apr/2000
+123.123.123.123
+26/Apr/2000
+123.123.123.123
+26/Apr/2000
+123.123.123.123
+26/Apr/2000
+123.123.123.123
+26/Apr/2000
+
+
+#adding some contents to the pattern
+#accessing the pics and displaying no image where pic is not available
+#?:->it means the thing is optional
+    #. ->any char
+    #\w -> word char ->[a-zA-Z0-9_]
+    #\W -> non word ->[^a-zA-Z0-9_]
+    #\S ->non space
+    #\s ->for space
+    #\d ->any digit.
+    #\D ->any non-digit
+    #[a-zA-Z] ->any alphabet
+
+ m= re.match('(\d\d\d\.\d{3}[.]\d{1,3}\.[0-9]{3}).*?(\d{1,2}/[a-zA-Z]{3}/\d{4}).*(?:GET|POST)\s+/(?:pics/(\w+\.\w+))?.*',line)
+       if m!=None:
+        ip=m.group(1)#group(1) means the first one
+        dt=m.group(2) #to access date
+        im=m.group(3)#adding some contents to the pattern
+        if im==None:
+            im='No image'
+        print(ip,dt,im)
+
+o/p:
+f= <http.client.HTTPResponse object at 0x0000016F1645B9A0>
+123.123.123.123 26/Apr/2000 wpaper.gif
+123.123.123.123 26/Apr/2000 No image
+123.123.123.123 26/Apr/2000 5star2000.gif
+123.123.123.123 26/Apr/2000 5star.gif
+123.123.123.123 26/Apr/2000 a2hlogo.jpg
+123.123.123.123 26/Apr/2000 No image
+
+
+#how to get a url eg. http://www.google.com/xyz
+m= re.match('(\d\d\d\.\d{3}[.]\d{1,3}\.[0-9]{3}).*?(\d{1,2}/[a-zA-Z]{3}/\d{4}).*(?:GET|POST)\s+/(?:pics/(\w+\.\w+))?.*(http://\S+)</A>.*',line)
+ #[] can identify only one charcater ->if we write [abc],it will match with any of the character. For matching all we should write [abc]{3}
+    if m!=None:
+        ip=m.group(1)#group(1) means the first one
+        dt=m.group(2) #to access date
+        im=m.group(3)#adding some contents to the pattern.i.e.accessing the pics and displaying no image where pic is not available
+        if im==None:
+            im='No image'
+        url=m.group(4)
+        print(ip,dt,im,url)
+        #print(line)
+
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/regex.py"
+f= <http.client.HTTPResponse object at 0x0000024733F4A9A0>
+123.123.123.123 26/Apr/2000 wpaper.gif http://www.jafsoft.com/asctortf/
+123.123.123.123 26/Apr/2000 No image http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123 26/Apr/2000 5star2000.gif http://www.jafsoft.com/asctortf/
+123.123.123.123 26/Apr/2000 5star.gif http://www.jafsoft.com/asctortf/
+123.123.123.123 26/Apr/2000 a2hlogo.jpg http://www.jafsoft.com/asctortf/
+123.123.123.123 26/Apr/2000 No image http://www.jafsoft.com/asctortf/
+
+Process finished with exit code 0
+
+
+#to insert values
+        query=f"INSERT INTO LOGDATA VALUES('{ip}','{dt}','{im}','{url}')"
+        print(query)
+        cur.execute(query)
+con.commit()
+#to select values..also comment out
+cur.execute('SELECT * FROM LOGDATA')
+result=cur.fetchall()#to fetch all data 
+print('result=',result)
+
+o/p:
+
+result= [('123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000',
+ 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'), ('123.123.123.123', '26/Apr/2000', '5star2000.gif', 
+'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', 
+'26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'),
+ ('123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'), 
+('123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'), ('123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'), ('123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'), ('123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/')]
+
+Process finished with exit code 0
+
+
+
+#to put the result content into a csv file
+import csv
+f=open('dbdump.csv','w',newline='')#by default new line is true because normally a blank line comes elae, so to avoid it we make it ''.
+wt=csv.writer(f)
+wt.writerow(['IP','DATE','PICS','URL'])#writerow will create a new blank line
+#TO PASS EACH ROW
+for each_row in result:
+    wt.writerow(each_row)#output is displayed on a new file named dbdump.csv
+f.close()
+print('-'*40)
+
+o/p:
+
+IP,DATE,PICS,URL
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,wpaper.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123,26/Apr/2000,5star2000.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,5star.gif,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,a2hlogo.jpg,http://www.jafsoft.com/asctortf/
+123.123.123.123,26/Apr/2000,No image,http://www.jafsoft.com/asctortf/
+
+
+
+#reading the data from  csv file
+f=open('dbdump.csv')
+rdr=csv.reader(f)#passing file object in reader
+csv_out=list(rdr)
+print('csv_out=',csv_out)
+
+o/p:
+
+csv_out= [['IP', 'DATE', 'PICS', 'URL'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'wpaper.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF'], ['123.123.123.123', '26/Apr/2000', '5star2000.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', '5star.gif', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'a2hlogo.jpg', 'http://www.jafsoft.com/asctortf/'], ['123.123.123.123', '26/Apr/2000', 'No image', 'http://www.jafsoft.com/asctortf/']]
+
+

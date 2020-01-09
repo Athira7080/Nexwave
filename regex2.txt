@@ -1,0 +1,42 @@
+s='abc123xyz456ABC'
+#in string we have a split
+line='-'*40
+r1=s.split('123')
+print('r1=',r1)
+print(line)
+#to split wherever there is a no.
+#1st arg->pattern,2nd->string
+import re
+r2=re.split('\d{3}',s)
+print('r2=',r2)
+print(line)
+r3=s.find('123')
+if r3!=-1:
+    print('Substring found')
+    print(line)
+r4=re.search('\d{2}',s)
+if r4!=-1:
+    print('Digit found')  #if it gets 2 digit it wont check the remaining entire string
+print(line)
+f=open(r'C:\Users\lab365\Desktop\Python programming\log\serverlog.txt')
+data=f.read()
+#copy the complete ip
+ips=re.findall('\d{3}.\d{3}.\d{3}.\d{3}.',data)
+print('ips=',ips)
+print(line)
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/regex_2.py"
+r1= ['abc', 'xyz456ABC']
+----------------------------------------
+r2= ['abc', 'xyz', 'ABC']
+----------------------------------------
+Substring found
+----------------------------------------
+Digit found
+----------------------------------------
+ips= ['123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123 ', '123.123.123.123"', '123.123.123.123"', '123.123.123.123"', '123.123.123.123/']
+----------------------------------------
+
+Process finished with exit code 0
