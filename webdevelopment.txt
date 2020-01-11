@@ -1,0 +1,68 @@
+Decorator
+
+
+
+def add1(a,b):
+    print('Result is: ')
+    print(a+b+a)
+    print('end of res')
+
+def sub1(a,b):
+    print('Result is: ')
+    print(a - b )
+    print('end of res')
+add1(10,20)
+sub1(10,20)
+
+#mydecorator
+def mydec(func):#func for decorator which accepts 2 values
+    def decorated_func(*x,**y):
+        print('Result is: ')
+        func(*x,**y)
+        print('End of res')
+    return decorated_func#we need to return the function object and not call the function
+
+@mydec#when we wish add2() to print like add1,instead of writing the whole stmnt just do this '@'
+def add2(a,b):
+    print(a+b+b)
+add2(10,20)
+
+#how @mydec works?
+def add3(a,b):
+    print(a+b)
+    #manually calling the function mydec:
+f=mydec(add3)
+#f -> decorated_func
+f(100,200)
+#a shortcut is provided to do this activity.i.e.without manually
+
+@mydec
+def add4(a,b,c):#the func wont work,to make it work make the mydec generic
+    print(a+b+c)
+add4(10,20,30)
+
+#inside x now is -> 10,20,30
+# y is empty
+#func(*x,**y) -> unpacking is done.i.e. func(10,20,30)
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/decorators.py"
+Result is: 
+40
+end of res
+Result is: 
+-10
+end of res
+Result is: 
+50
+End of res
+Result is: 
+300
+End of res
+Result is: 
+60
+End of res
+
+Process finished with exit code 0

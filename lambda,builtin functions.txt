@@ -1,0 +1,66 @@
+#map ,has 2 args,is a built in func (func and collection)
+l=[100,200,300,400]
+def sub(i):
+    return i-10
+r1=map(sub,l)#the value returned by sub() becomes the element here
+print('r1=',list(r1))
+
+#filter -> to filter out by element,2 args (func and collections)
+def filt(j):
+    return j>100
+r2=filter(filt,l)
+print('r2=',list(r2))
+
+#reduce
+import functools as fc #funcs in a standary lib
+def red(p,q):
+    return p+q
+r3=fc.reduce(red,l)#it will take 1st 2 element first, add it,here,sum=300. Then it will add this sum with the next element,here,300+300=600.  Like this it continues
+m=['w','e','l']
+r4=fc.reduce(red,m)
+print('r3=',r3,'\nr4=',r4)
+
+#lambda functions
+#are funcs not having a name
+#a single line func
+#adv-> the func can be directly written inside the args. In the above sub() eg. no need to create a func sub and then pass
+#we can directly write it inside r1=(exp,collection)
+#it starts with the keyword lambda
+
+r5=map(lambda i:i-10,l)
+r6=filter(lambda j:j>100,l)
+r7=fc.reduce(lambda p,q:p+q,l)
+print('r5=',list(r5))
+print('r6=',list(r6))
+print('r7=',r7)
+
+#lambda func can be siigned to any variable also. Use that variable to call the func
+f=lambda a,b:a+b
+r8=f(10,20)
+print('r8=',r8)
+
+l=[(lambda i:i*i)(a) for a in range(10)]
+print('l=',l)
+
+#key-value pairs
+keys=['A','B']
+values=[10,20]
+d={k:(lambda i:i+i)(v) for k,v in zip(keys,values)}
+print('d=',d)
+
+
+
+o/p:
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/builtins_ex.py"
+r1= [90, 190, 290, 390]
+r2= [200, 300, 400]
+r3= 1000 
+r4= wel
+r5= [90, 190, 290, 390]
+r6= [200, 300, 400]
+r7= 1000
+r8= 30
+l= [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+d= {'A': 20, 'B': 40}
+
+Process finished with exit code 0

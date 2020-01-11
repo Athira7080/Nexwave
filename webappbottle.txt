@@ -1,0 +1,74 @@
+import bottle
+#we are trying to create a website
+#how to create website?
+app=bottle.Bottle()#creating a class and assigning it to the object
+#app.run()#in o/p we can see 'http://127.0.0.1:8080/' which is the server link for our website(here,404 error will be displayed because we have no pages created)
+#127.0.0.1  - local IP, not to be shared
+@app.error(404)#app.error is a decorator which is predefined with its own libraries
+def errorpage(err):
+    return 'Page under construction'
+
+@app.route('/')#another decorator,'/' indicates home URL
+def indexpage():
+    return 'WELCOME'
+
+@app.route('/about')
+def aboutpage():
+    return '<b>This is about</b>'#<b> stands for bold(HTML tag)...Run the code...In url add:'..8080/about' and enter
+
+#want to open a login page when login button is clicked
+@app.route('/login')
+def loginpage():
+    return '''<html>
+     <form action='/verify' method='POST'>
+     Username:<input type='text' name='uname'/><br/>
+     Password:<input type='password' name='pw'/><br/>
+     <input type='Submit' value='LogIN'/>    
+    </form>         
+    </html>
+    '''
+@app.route('/verify',method='POST')
+def verifypage():
+    u=bottle.request.forms.get('uname')#here it will return the value if the key is found else it will return NONE
+    #if it was a list['uname'] it will throw 404 error - page not found
+#forms is like a dictionary..it will keep whatever we enters
+    p=bottle.request.forms.get('pw')
+    if not(u=='abc' and p=='xyz'):
+        return 'LOGIN failed'
+    else:
+        return 'LOGIN success'
+app.run(host='192.168.3.37',port=8080)#trying to access our website using ip
+#3.1 is the gateway (in cmd prmt type 'ipconfig' to get the IP address of our s/m)
+#app.run should be the last line because server runs only once
+
+#depending upon the type of activity we are doing,there are several methods defined:
+#GMail/about/contact -> GET(username and password will be visible in the URL
+#user/password ->POST(to hide credentials in the URL
+#to update -> PUT
+#to delete -> DELETE
+
+#extension used for html tags in bottle is '.tpl' . In falsk and Django it is '.html' itself
+#we have a TMPLATE_PATH in bottle while a template folder need to be created in flask and Django
+#executions are handled with a template engine -> STE is the engine in bottle,JINJA2 in flask and DTE in Django
+#these providers will tell us how to write a code->
+#   -STE identifies the stmnts which sart with % as python
+#   -JINJA2 -> {%stmnt%}
+#   -DTE -> {%stmnt%}
+#to print a variable in html {{var}}. It is same in all the 3
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/webapp_bottle.py"
+Bottle v0.12.18 server starting up (using WSGIRefServer())...
+Listening on http://192.168.3.37:8080/
+Hit Ctrl-C to quit.
+
+192.168.3.37 - - [11/Jan/2020 03:01:31] "POST /verify HTTP/1.1" 200 12
+abc None
+192.168.3.37 - - [11/Jan/2020 03:02:11] "GET /login HTTP/1.1" 200 240
+192.168.3.37 - - [11/Jan/2020 03:02:20] "POST /verify HTTP/1.1" 200 13
+
+
+click the http link to view your website
+to go to another page add/pagename and then enter
