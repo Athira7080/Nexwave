@@ -1,0 +1,167 @@
+import bottle
+
+app=bottle.Bottle()
+@app.error(404)
+def errorpage(err):
+    return 'Page under construction'
+
+@app.route('/')
+def indexpage():
+    return 'WELCOME'
+
+@app.route('/about')
+def aboutpage():
+    return '<b>This is about</b>'
+@app.route('/login')
+def loginpage():
+    return '''<html>
+     <form action='/verify' method='POST'>
+     Username:<input type='text' name='uname'/><br/>
+     Password:<input type='password' name='pw'/><br/>
+     <input type='Submit' value='LogIN'/>    
+    </form>         
+    </html>
+    '''
+@app.route('/verify',method='POST')
+def verifypage():
+    u=bottle.request.forms.get('uname')
+    p=bottle.request.forms.get('pw')
+    if not(u=='abc' and p=='xyz'):
+        return 'LOGIN failed'
+    else:
+        bottle.TEMPLATE_PATH.append(r'C:\Users\lab365\Desktop\Python programming\bin')
+        import sqlite3
+        con=sqlite3.connect('mydb.sqlite3')
+        cur=con.cursor()
+        cur.execute('SELECT * FROM LOGDATA')
+        result=cur.fetchall()
+        return bottle.template('report.tpl',res=result)
+       # return 'LOGIN success', <> will take any data
+def statifile(filename):
+    return bottle.static_file(root=r'C:\Users\lab365\Desktop\Python programming\bin',filename=filename)
+#if u give another attribute besides filename as download='TRUE' -> it will download all the files
+#o/p  is the data in the file u give(here,..../download/ot1.txt),if u give output.csv it shows as downloads
+
+@app.route('/empid/<eid:int>')#int,float,string,etc.. can be used
+def empid(eid):
+    d={'name':'abc','EMP_ID':eid}
+    return d# in the o/p link type"http://192.168.3.37:8080/empid/101'
+#data will be displayed like - {"name": "abc", "EMP_ID": 101}
+
+@app.route('/nameid/<nid:re:[a-z0-9]+>')
+def name_id(nid):
+    return str(nid)#type -> 'http://192.168.3.37:8080/nameid/abc12' in the link
+#o/p:- abc12
+
+@app.route('/logdata')
+def logdata():
+    return bottle.redirect('/login')# if we type '/logdata' it will be redirected to login page
+
+@app.route('/passwords')
+def passwords():
+    return bottle.abort(201,'Access Denied')#raises a 201 error
+app.run(host='192.168.3.37',port=8080)
+
+
+report.tpl:
+
+<html>
+<head>
+<title> Welcome to Log Report</title>
+</head>
+<body>
+<h1> LOG REPORT </h1>
+
+<table border='1'  bgcolour='green'>
+%for ip,date,image,url in res:
+
+%if image=='No image':
+<tr bgcolor='yellow'>
+<td> {{ip}}</td>
+<td>{{date}}</td>
+<td bgcolor='red'>{{image}}</td>
+<td>{{url}}</td>
+</tr>
+%else:
+<tr>
+<td> {{ip}}</td>
+<td>{{date}}</td>
+<td>{{image}}</td>
+<td>{{url}}</td>
+</tr>
+%end
+%end
+</table>
+</body>
+</html>
+
+
+o/p:
+table is displayed
+
+ 
+
+#HOW TO CREATE API
+#API-1 ->IP
+#apI1=http://127.0..0.1:8080/ip
+#in general data is returned in json format
+import bottle
+app=bottle.Bottle()
+
+@app.route('/ip',method='GET')#GET,POST,PUT,DELETE
+def api_ip():
+    import _sqlite3
+    con=_sqlite3.connect('mydb.sqlite3')
+    cur=con.cursor()
+    cur.execute('SELECT IP FROM LOGDATA')
+    result=cur.fetchall()
+    # return str(result)#execute
+    result=[i[0] for i in result]
+    d={k:v for k,v in enumerate(result)}
+    return d
+
+#API-2 -> http://127.0.0.1:8080/emp
+@app.route('/emp',method='POST')
+def empdetails():
+    #send it through body
+    details=bottle.request.params#will be in a name-value pair
+    details=dict(details)
+    return details
+
+app.run()
+
+#how to call api,how to read the json data through program
+
+api1='http://127.0.0.1:8080/ip'
+api2='http://127.0.0.1:8080/emp'
+import requests
+api1_res=requests.get(api1)
+api1_res=api1_res.json()
+print('api1_res=',api1_res)
+print('-'*40)
+api2_res=requests.post(api2,params={'user':'abc','password':'xyz'})
+api2_res=api2_res.json()
+print('api2_res=',api2_res)
+#before running this, keep running the REST_API_Bottle.py..because we ar trying to call the api o/p from it.
+print('-'*40)
+#go back to REST_API_Bottle.py
+api3='http://127.0.0.1:8080/json'
+api3_res=requests.get(api3)
+api3_res=api3_res.json()
+print('api3_res=',api3_res)
+print('-'*40)#output will be viewwed in a file name mydata.json
+#micro-all the program is written in one file only
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/call_api.py"
+api1_res= {'0': '123.123.123.123', '1': '123.123.123.123', '2': '123.123.123.123', '3': '123.123.123.123', '4': '123.123.123.123', '5': '123.123.123.123', '6': '123.123.123.123', '7': '123.123.123.123', '8': '123.123.123.123', '9': '123.123.123.123', '10': '123.123.123.123', '11': '123.123.123.123', '12': '123.123.123.123', '13': '123.123.123.123', '14': '123.123.123.123', '15': '123.123.123.123', '16': '123.123.123.123', '17': '123.123.123.123', '18': '123.123.123.123', '19': '123.123.123.123', '20': '123.123.123.123', '21': '123.123.123.123', '22': '123.123.123.123', '23': '123.123.123.123', '24': '123.123.123.123', '25': '123.123.123.123', '26': '123.123.123.123', '27': '123.123.123.123', '28': '123.123.123.123', '29': '123.123.123.123', '30': '123.123.123.123', '31': '123.123.123.123', '32': '123.123.123.123', '33': '123.123.123.123', '34': '123.123.123.123', '35': '123.123.123.123', '36': '123.123.123.123', '37': '123.123.123.123', '38': '123.123.123.123', '39': '123.123.123.123', '40': '123.123.123.123', '41': '123.123.123.123', '42': '123.123.123.123', '43': '123.123.123.123', '44': '123.123.123.123', '45': '123.123.123.123', '46': '123.123.123.123', '47': '123.123.123.123', '48': '123.123.123.123', '49': '123.123.123.123', '50': '123.123.123.123', '51': '123.123.123.123', '52': '123.123.123.123', '53': '123.123.123.123', '54': '123.123.123.123', '55': '123.123.123.123', '56': '123.123.123.123', '57': '123.123.123.123', '58': '123.123.123.123', '59': '123.123.123.123', '60': '123.123.123.123', '61': '123.123.123.123', '62': '123.123.123.123', '63': '123.123.123.123', '64': '123.123.123.123', '65': '123.123.123.123', '66': '123.123.123.123', '67': '123.123.123.123', '68': '123.123.123.123', '69': '123.123.123.123', '70': '123.123.123.123', '71': '123.123.123.123', '72': '123.123.123.123', '73': '123.123.123.123', '74': '123.123.123.123', '75': '123.123.123.123', '76': '123.123.123.123', '77': '123.123.123.123', '78': '123.123.123.123', '79': '123.123.123.123', '80': '123.123.123.123', '81': '123.123.123.123', '82': '123.123.123.123', '83': '123.123.123.123', '84': '123.123.123.123', '85': '123.123.123.123', '86': '123.123.123.123', '87': '123.123.123.123', '88': '123.123.123.123', '89': '123.123.123.123', '90': '123.123.123.123', '91': '123.123.123.123', '92': '123.123.123.123', '93': '123.123.123.123', '94': '123.123.123.123', '95': '123.123.123.123', '96': '123.123.123.123', '97': '123.123.123.123', '98': '123.123.123.123', '99': '123.123.123.123', '100': '123.123.123.123', '101': '123.123.123.123', '102': '123.123.123.123', '103': '123.123.123.123', '104': '123.123.123.123', '105': '123.123.123.123', '106': '123.123.123.123', '107': '123.123.123.123'}
+----------------------------------------
+api2_res= {'password': 'xyz', 'user': 'abc'}
+----------------------------------------
+api3_res= {'course': 'python', 'loc': 'blr'}
+----------------------------------------
+
+Process finished with exit code 0
+
+

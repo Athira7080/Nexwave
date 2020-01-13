@@ -1,0 +1,134 @@
+import flask
+
+app=flask.Flask('MyApp')
+@app.errorhandler(404)
+def errorpage(err):
+    return 'Page under construction'
+
+@app.route('/')
+def indexpage():
+    return 'WELCOME'
+
+@app.route('/about')
+def aboutpage():
+    return '<b>This is about</b>'
+@app.route('/login')
+def loginpage():
+    return '''<html>
+     <form action='/verify' method='POST'>
+     Username:<input type='text' name='uname'/><br/>
+     Password:<input type='password' name='pw'/><br/>
+     <input type='Submit' value='LogIN'/>    
+    </form>         
+    </html>
+    '''
+@app.route('/verify',methods=['POST'])
+def verifypage():
+    u=flask.request.form.get('uname')
+    p=flask.request.form.get('pw')
+    if not(u=='abc' and p=='xyz'):
+        return 'LOGIN failed'
+    else:
+
+        import sqlite3
+        con=sqlite3.connect('mydb.sqlite3')
+        cur=con.cursor()
+        cur.execute('SELECT * FROM LOGDATA')
+        result=cur.fetchall()
+        return flask.render_template('report.html',res=result)
+
+def statifile(filename):
+    return flask.send_from_directory(directory=r'C:\Users\lab365\Desktop\Python programming\bin',filename=filename)
+
+
+@app.route('/empid/<int:eid>')
+def empid(eid):
+    d={'name':'abc','EMP_ID':eid}
+    return d
+
+@app.route('/logdata')
+def logdata():
+    return flask.redirect('/login')
+
+@app.route('/passwords')
+def passwords():
+    return flask.abort(201,'Access Denied')
+app.run(host='192.168.3.37',port=8080)
+
+
+#how to create flas api
+
+
+import flask
+app=flask.Flask('MyApp')
+
+@app.route('/ip',methods=['GET'])
+def api_ip():
+    import _sqlite3
+    con=_sqlite3.connect('mydb.sqlite3')
+    cur=con.cursor()
+    cur.execute('SELECT IP FROM LOGDATA')
+    result=cur.fetchall()
+
+    result=[i[0] for i in result]
+    d={k:v for k,v in enumerate(result)}
+    return d
+
+#API-2 -> http://127.0.0.1:8080/emp
+@app.route('/emp',methods=['POST'])
+def empdetails():
+    #send it through body
+    details=flask.request.args#will be in a name-value pair
+    details=dict(details)
+    return details
+
+#after coming from call_api.py
+@app.route('/json')
+def fromjson():
+    f=open('mydata.json','w')
+    d={'course':'python','loc':'blr'}
+    import json
+    json.dump(d,f)#2nd way to write into a json file
+    f.close()
+    f=open('mydata.json')
+    r=json.load(f)
+    f.close()
+    return r# o/p -> {"course": "python", "loc": "blr"}
+
+#in call api add api3
+app.run()
+
+#how to call api:
+
+#how to call api,how to read the json data through program
+api1='http://127.0.0.1:5000/ip'
+api2='http://127.0.0.1:5000/emp'
+import requests
+api1_res=requests.get(api1)
+api1_res=api1_res.json()
+print('api1_res=',api1_res)
+print('-'*40)
+api2_res=requests.post(api2,params={'user':'abc','password':'xyz'})
+api2_res=api2_res.json()
+print('api2_res=',api2_res)
+#before running this, keep running the REST_API_Bottle.py..because we ar trying to call the api o/p from it.
+print('-'*40)
+#go back to REST_API_Bottle.py
+api3='http://127.0.0.1:5000/json'
+api3_res=requests.get(api3)
+api3_res=api3_res.json()
+print('api3_res=',api3_res)
+print('-'*40)#output will be viewwed in a file name mydata.json
+#micro-all the program is written in one file only
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" "C:/Users/lab365/Desktop/Python programming/bin/call_api.py"
+api1_res= {'0': '123.123.123.123', '1': '123.123.123.123', '2': '123.123.123.123', '3': '123.123.123.123', '4': '123.123.123.123', '5': '123.123.123.123', '6': '123.123.123.123', '7': '123.123.123.123', '8': '123.123.123.123', '9': '123.123.123.123', '10': '123.123.123.123', '11': '123.123.123.123', '12': '123.123.123.123', '13': '123.123.123.123', '14': '123.123.123.123', '15': '123.123.123.123', '16': '123.123.123.123', '17': '123.123.123.123', '18': '123.123.123.123', '19': '123.123.123.123', '20': '123.123.123.123', '21': '123.123.123.123', '22': '123.123.123.123', '23': '123.123.123.123', '24': '123.123.123.123', '25': '123.123.123.123', '26': '123.123.123.123', '27': '123.123.123.123', '28': '123.123.123.123', '29': '123.123.123.123', '30': '123.123.123.123', '31': '123.123.123.123', '32': '123.123.123.123', '33': '123.123.123.123', '34': '123.123.123.123', '35': '123.123.123.123', '36': '123.123.123.123', '37': '123.123.123.123', '38': '123.123.123.123', '39': '123.123.123.123', '40': '123.123.123.123', '41': '123.123.123.123', '42': '123.123.123.123', '43': '123.123.123.123', '44': '123.123.123.123', '45': '123.123.123.123', '46': '123.123.123.123', '47': '123.123.123.123', '48': '123.123.123.123', '49': '123.123.123.123', '50': '123.123.123.123', '51': '123.123.123.123', '52': '123.123.123.123', '53': '123.123.123.123', '54': '123.123.123.123', '55': '123.123.123.123', '56': '123.123.123.123', '57': '123.123.123.123', '58': '123.123.123.123', '59': '123.123.123.123', '60': '123.123.123.123', '61': '123.123.123.123', '62': '123.123.123.123', '63': '123.123.123.123', '64': '123.123.123.123', '65': '123.123.123.123', '66': '123.123.123.123', '67': '123.123.123.123', '68': '123.123.123.123', '69': '123.123.123.123', '70': '123.123.123.123', '71': '123.123.123.123', '72': '123.123.123.123', '73': '123.123.123.123', '74': '123.123.123.123', '75': '123.123.123.123', '76': '123.123.123.123', '77': '123.123.123.123', '78': '123.123.123.123', '79': '123.123.123.123', '80': '123.123.123.123', '81': '123.123.123.123', '82': '123.123.123.123', '83': '123.123.123.123', '84': '123.123.123.123', '85': '123.123.123.123', '86': '123.123.123.123', '87': '123.123.123.123', '88': '123.123.123.123', '89': '123.123.123.123', '90': '123.123.123.123', '91': '123.123.123.123', '92': '123.123.123.123', '93': '123.123.123.123', '94': '123.123.123.123', '95': '123.123.123.123', '96': '123.123.123.123', '97': '123.123.123.123', '98': '123.123.123.123', '99': '123.123.123.123', '100': '123.123.123.123', '101': '123.123.123.123', '102': '123.123.123.123', '103': '123.123.123.123', '104': '123.123.123.123', '105': '123.123.123.123', '106': '123.123.123.123', '107': '123.123.123.123'}
+----------------------------------------
+api2_res= {'password': 'xyz', 'user': 'abc'}
+----------------------------------------
+api3_res= {'course': 'python', 'loc': 'blr'}
+----------------------------------------
+
+Process finished with exit code 0
