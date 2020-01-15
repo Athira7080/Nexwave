@@ -1,0 +1,39 @@
+Q:
+Display credentials from SSH_log_Sample.txt (no. of failed login attempt,version,encryption,user name,ip,port):
+
+f=open(r'C:\Users\lab365\Desktop\Python programming\bin\SSH_log_Sample.txt','r')
+l=f.readlines()
+c = 0
+for each_line in l:
+    if 'Failed password' in each_line:
+        c=c+1
+    if 'version' in each_line:
+        each_word=each_line.split()
+        vr=each_word[3].strip(',')
+    if 'ssh-rsa' in each_line:
+        encr=each_line.split()
+        w=encr[encr.index('ssh-rsa')+1]
+        w=w.split(':')
+        encryption=w[0]
+    if 'Accepted' in each_line:
+        user=each_line.split()
+        login_user=user[8]
+        ipaddr=user[10]
+        port=user[12]
+
+print('Number of failed login attempt: ',c)
+print('sshd Version: ',vr)
+print('Encryption: ',encryption)
+print('Succesful Login User: ',login_user)
+print('ip: ',ipaddr)
+print('port: ',port)
+
+o/p:
+
+Number of failed login attempt:  6
+sshd Version:  OpenSSH_6.8
+Encryption:  SHA256
+Succesful Login User:  fred
+ip:  192.0.2.60
+port:  6647
+

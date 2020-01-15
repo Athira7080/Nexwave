@@ -1,0 +1,217 @@
+
+#multiple objects
+#features of a class:we can create 0 or more objects
+#objects are instances of class which uses its own space and work on it without affecting other instances
+#classes are collections of methods and variables
+#can write n no. of classes in one file
+#2 types of objects-class and instance objects
+#class object is only one,whenever we are calling the class, its the instance being called
+#inheritance
+#operator overloading -
+# #methods eg. __add__ :- y=x.__add__(y)
+#here we dont have an interface
+class Account1: #or class Account1()
+    def add_user(self,n): #self is like this in java...current object is indicated
+        self.name=n
+    def view_user(self):
+        return self.name
+    bank='ICICI' #static variable or class variable
+    @classmethod
+    def bank_rules(cls,area):
+        return 'Bank_rules'+area
+    @staticmethod
+    def bank_info():
+        return 'Bank Info'
+    def __init__(self):#is like a constructor
+        print('SBI Logic here')
+
+cust1=Account1()#1.It is creating an object(using '__new__' and initializing it(using '__init__')
+cust2=Account1()
+cust1.add_user('c1')#internally it gets called like add_user(object,value1,value2,...)
+cust2.add_user('c2')
+print('Object1 for view_user()=',cust1.view_user())
+print('Object2 for view_user()=',cust2.view_user())
+#here, cust1,cust2 are instance objects and Account1() is the class variable
+#variables , types of variables :- local,enclosed,global,instance,class
+#add_user,view_user - diff objects of these funcs are created for each user.Therefore it is also called Instance method.
+#because for each user separate funcs. are created and executed independently
+#name is an instance variable because its copy is used by each object. Without 'self' it will act as a local variable
+#to access use the object name and then which variable u want:-
+print('Bank= ',Account1.bank)
+# u can also access using the object name
+print('Customer name= ',cust1.name)
+#externally to force an object instance to a class object- a decorator is provided:-@class method
+print(Account1.bank)
+print(cust1.name)
+print(Account1.bank_rules(' Bangalore'))
+print(Account1.bank_info())
+# print(cust1.bank)
+# print(cust1.bank_rules(' blr'))
+print('xyz=',Account1.view_user((cust2)))
+
+#inheritance
+class Account2(Account1):
+    def addadhar(self,a):
+        self.adhar=a
+    def viewadhar(self):
+        return self.adhar
+    #rewriting a method with same method name as that of parent class#method overriding or polymorphism
+    def view_user(self):
+        return 'Welcome '+self.name#current class is the priority one
+    #if we want o generate current account also
+    def __init__(self):#method overriding occured
+        super().__init__()#to call parent class method first
+        print('CA Logic here')
+        #another way to access parent class -> 'Account1.__init__(self)'
+
+
+print('---------------------------------------')
+
+cust3=Account2()
+cust3.add_user('c3')
+print(cust3.view_user())
+print(Account2.bank)
+print(Account2.bank_rules(' Blr'))
+print(Account2.bank_info())
+cust3.addadhar('A1')
+print(cust3.viewadhar())
+
+
+print('---------------------------------------')
+
+class RBI:
+    def viewrules(self):
+        return 'RBI rules'
+
+    # mulitple inheritance:
+class Account3(Account2,RBI):
+    pass
+
+cust4=Account3()
+print(cust4.viewrules())#for method overloading it first checks in the current class and if method not found it will go from left to right
+#i.e first it will go and check for the method in Account2 and if method not found there then the control goes to the class RBI
+
+
+print('---------------------------------------')
+
+class Govt:
+    def viewrules(self):
+        return 'Govt Rules'
+
+class Account4(Account3,Govt):
+    pass
+
+cust5=Account4()
+print(cust5.viewrules())
+print(Govt.viewrules((cust5)))
+
+print('---------------------------------------')
+
+class Account5(Account3):
+    def __init__(self):
+        self.gov=Govt()
+
+cust6=Account5()
+print(cust6.viewrules())
+print(cust6.gov.viewrules())
+
+print('---------------------------------------')
+
+class Account6:
+    def __init__(self,n):
+        self.name=n
+    def __add__(self, x):#to concatenate
+        return self.name+x.name
+    def __str__(self):#to display object value
+        return self.name
+    def __len__(self):#to find the length
+        return len(self.name)
+    def __iter__(self):#to make an object iterable
+        self.count=0
+        return self
+    def __next__(self):
+        c=self.count
+        if c<len(self.name):
+            self.count +=1
+            return self.name[c]
+        else:
+            raise StopIteration #is a class name
+
+cust7=Account6('ABC')
+cust8=Account6('xyz')
+result=cust7+cust8 #cust7.__add__(cust8)
+print('result=',result)
+print('cust7=',cust7)
+print('length=',len(cust7))
+
+for i in cust7:#if u want to make any object iterable,we need to call 2 funcs basically(in its class)
+    print('i=',i)
+
+from abc import ABC,abstractmethod#abc.py is a file name
+class Account(ABC):
+    def adduser(self,a):
+        self.name=a
+#our requirement- should not instantiate abstract class method
+    @abstractmethod
+    def viewuser(self):
+        return self.name#error comes, it provides a restriction
+
+#a=Account()
+print('---------------------------------------')
+
+#first comment out 'a=Account()'
+class MyAccount(Account):#sub class of the abstract class should be created
+    def viewuser(self):
+        return 'Hello'+self.name
+
+b=MyAccount()
+b.adduser('B')
+print(b.viewuser())
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" C:/Users/lab365/Desktop/python/bin/classes_ex.py
+SBI Logic here
+SBI Logic here
+Object1 for view_user()= c1
+Object2 for view_user()= c2
+Bank=  ICICI
+Customer name=  c1
+ICICI
+c1
+Bank_rules Bangalore
+Bank Info
+xyz= c2
+---------------------------------------
+SBI Logic here
+CA Logic here
+Welcome c3
+ICICI
+Bank_rules Blr
+Bank Info
+A1
+---------------------------------------
+SBI Logic here
+CA Logic here
+RBI rules
+---------------------------------------
+SBI Logic here
+CA Logic here
+RBI rules
+Govt Rules
+---------------------------------------
+RBI rules
+Govt Rules
+---------------------------------------
+result= ABCxyz
+cust7= ABC
+length= 3
+i= A
+i= B
+i= C
+---------------------------------------
+HelloB
+
+Process finished with exit code 0
+
