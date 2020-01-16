@@ -1,0 +1,98 @@
+#how to use selenium to test my web appln
+#we will be programmatically doing the things - opening browser, typing url, finding field,typing username and password,pressing enter and verifying
+#first keep the webapp_bottle.py running
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+browser=webdriver.Chrome()#open browser
+browser.get('http://127.0.0.1:5000/login')#type url
+user_field=browser.find_element_by_name('uname')#find field
+pass_field=browser.find_element_by_name('pw')
+user_field.send_keys('abc')#type username and password
+pass_field.send_keys('xyz')
+pass_field.send_keys(Keys.RETURN)#press enter
+try:
+    assert 'Log' in browser.title
+    print('Test success')
+except AssertionError:
+    print('test failed')
+finally:
+#verify title bar and body
+# assert 'Log' in browser.title #if error is there browser wont close
+# print('Test case success')
+    import time
+    time.sleep(2)
+    browser.close()
+
+#using unit test framework to run multiple tests
+import unittest
+#1 step:create a class and it should be a sub class of unittest.TestCase class
+class MyTests(unittest.TestCase):
+    #2.inside class 3 methods-setup,testcases,teardown
+    def setUp(self):
+        self.browser=webdriver.Chrome()
+        print('In setup...')
+    def test_testcase1(self):
+        browser=self.browser
+        browser.get('http://127.0.0.1:5000/login')
+        user_field = browser.find_element_by_name('uname')
+        pass_field = browser.find_element_by_name('pw')
+        user_field.send_keys('abc')
+        pass_field.send_keys('xyz')
+        pass_field.send_keys(Keys.RETURN)
+        assert 'Log' in browser.title
+        print('Testcase1 pass')
+
+    def test_testcase2(self):
+        browser = self.browser
+        browser.get('http://127.0.0.1:5000/login')
+        user_field = browser.find_element_by_name('uname')
+        pass_field = browser.find_element_by_name('pw')
+        user_field.send_keys('abc')
+        pass_field.send_keys('xyz')
+        pass_field.send_keys(Keys.RETURN)
+        assert 'Log' in browser.title
+        print('Testcase2 pass')
+
+    def test_testcase3(self):
+        browser = self.browser
+        browser.get('http://127.0.0.1:5000/login')
+        user_field = browser.find_element_by_name('uname')
+        pass_field = browser.find_element_by_name('pw')
+        user_field.send_keys('abc')
+        pass_field.send_keys('xyz')
+        pass_field.send_keys(Keys.RETURN)
+        assert 'Log' in browser.title
+        print('Testcase3 pass')
+
+    def tearDown(self):
+        print('In teardown..')
+        import time
+        time.sleep(2)
+        self.browser.close()
+
+if __name__=='__main__':
+    unittest.main()
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" C:/Users/lab365/Desktop/python/bin/sel_testing.py
+Test success
+In setup...
+Testcase1 pass
+In teardown..
+.In setup...
+Testcase2 pass
+In teardown..
+.In setup...
+Testcase3 pass
+In teardown..
+.
+----------------------------------------------------------------------
+Ran 3 tests in 13.226s
+
+OK
+
+Process finished with exit code 0
+
+

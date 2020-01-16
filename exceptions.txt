@@ -1,0 +1,113 @@
+a=10
+b=10
+line='-'*40
+try:
+    r=a/b
+    print('r=',r)
+except:
+    print('Some Error')
+#here if we comment out b,it will show 'some error'
+print(line)
+
+try:
+    r2=a/b
+    print('r2=',r2)
+except ZeroDivisionError:
+    print('In ZDE')
+except NameError as n:
+    print('NE=',n)
+except(KeyError,IndexError):#finding an element in a dictionary which does not exist
+    print('KE or IE')
+print(line)
+
+    #super class can accept sub class exception but reverse is not possible
+    #here exceptions have the reverse concept of inheritance
+l=[]
+try:
+    print(l[1])
+except Exception as e:#if we want to know what type of exception is occuring
+    print('e=',e)
+    print('type=',type(e))
+print(line)
+
+c=10
+d=10
+try:
+    r=c/d
+except:
+    print('In except')
+else:
+    r=c/c
+    print('In else')
+print(line)
+
+#we can use else with if,for,while and try
+
+try:
+    r=c/d
+except:
+    print('IN except')
+    # print('xyz')
+finally:#it will always get executed
+    print('In finally')
+print(line)
+#try-finally
+#try-except-finally
+#try-except-else-finally
+
+e=10
+f=10
+try:
+    if f==0:
+        raise ZeroDivisionError
+    print('stmt-100')
+    r=e/f
+except ZeroDivisionError:
+    print('From raise')#raise is used when we want to create an exception at any time and to create user-defined exception
+result='Test case failed'
+try:
+    assert 'Success' in result,'Some test failed'#if this condition fails it will generate an error called
+    # assertion error and line of control will go there
+    print('test case success')
+except AssertionError as ae:
+    print('ae=',ae)
+print(line)
+
+class MyError(Exception):
+    def __init__(self,m):
+        self.msg=m
+    def __str__(self):
+        return 'ERRORDETAILS:'+self.msg
+
+
+try:
+    if 'success' not in result:
+        raise MyError('Test Failed')
+    else:
+        print('Execution success')
+except MyError as me:
+    print('me=',me)
+print(line)
+
+
+o/p:
+
+"C:\Users\lab365\Desktop\Python programming\myvenv1\Scripts\python.exe" C:/Users/lab365/Desktop/python/bin/exceptions.py
+r= 1.0
+----------------------------------------
+r2= 1.0
+----------------------------------------
+e= list index out of range
+type= <class 'IndexError'>
+----------------------------------------
+In else
+----------------------------------------
+In finally
+----------------------------------------
+stmt-100
+ae= Some test failed
+----------------------------------------
+me= ERRORDETAILS:Test Failed
+----------------------------------------
+
+Process finished with exit code 0
