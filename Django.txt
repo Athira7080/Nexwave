@@ -1,0 +1,112 @@
+1. Create a project folder
+ Make ur terminal directory till python(i.e. come out of bin in terminal) and type '>>django-admin startproject Myproject'
+This will be created  outside bin :-'Myproject'
+2.Run the server
+   >>cd Myproject
+   >>python manage.py runserver
+
+3.http://127.0.0.1:8000/admin
+Create a table
+Create admin credentials
+4.Create schema(make migrations) and execute schema and DB(migrate)
+>>python manage.py makemigrations
+>>python manage.py migrate
+>>python manage.py createsuperuser
+give a username and password -> y
+open DB ->Browse Data -> auth_user -> u can view ur username and password
+refresh the window
+>>python manage.py runserver
+5.Create app
+>>python manage.py startapp home
+
+ 1.goto settings.py under Myproject -> open it
+   in that under Installed_apps->add 'home'
+
+ 2. under Myproject goto urls.py ->it is the main gate
+ Myproject/urls.py->
+
+from django.contrib import admin
+from django.urls import path,include
+import home
+
+urlpatterns = [
+    path('admin/', admin.site.urls),path('',include(home.urls)),
+]
+
+ 3. home/urls ->copy paste urls.py to home
+
+from django.contrib import admin
+from django.urls import path,include
+import home.urls
+
+urlpatterns = [
+    path('admin/', admin.site.urls),path('',include(home.urls)),
+]
+ 4.home ->views.py
+ write a function in it
+
+ from django.shortcuts import render,HttpResponse
+def homepage(request):
+    return HttpResponse('Welcome')
+
+=> run the server( >>python manage.py runserver)
+
+
+.)To add about page in our site:
+
+=>In home.urls:-
+
+from.import views
+urlpatterns = [
+   path('',views.homepage),path('about/',views.aboutpage)
+
+=>In Views.py:-
+   def aboutpage(request):
+    return HttpResponse('This is how you learn')
+
+.)run the server
+6.Create a login app
+>>python manage.py startapp login
+
+ 1.goto settings.py under Myproject -> open it
+   in that under Installed_apps->add 'login'
+
+ 2. under Myproject goto urls.py ->it is the main gate
+ Myproject/urls.py->
+
+from django.contrib import admin
+from django.urls import path,include
+import home.urls
+import login.urls
+
+urlpatterns = [
+    path('admin/', admin.site.urls),path('',include(home.urls)),path('login/',include(login.urls))
+]
+
+ 3.login/urls ->copy paste urls.py to login
+
+from django.contrib import admin
+from django.urls import path,include
+from.import views
+urlpatterns = [
+   path('',views.loginpage)
+]
+
+ 4.login ->views.py
+ write a function in it
+
+ from django.shortcuts import render,HttpResponse
+def loginpage(request):
+    return HttpResponse('Welcome to login page')
+
+
+=> run the server( >>python manage.py runserver)
+
+
+In home app:-
+(in url)
+http://127.0.0.1:8000/
+add -> /admin,/about, etc.. to add the repective pages
+Similarly
+(in url)
+http://127.0.0.1:8000/login/
